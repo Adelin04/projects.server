@@ -29,17 +29,17 @@ const LoadingStyle = {
 };
 
 const Dashboard = () => {
-  const userLogged = useContext(UserContext);
+/*   const userLogged = useContext(UserContext);
   const projects = useContext(ProjectsContext);
-  const isLoading = projects.projects.isLoading;
+  const isLoading = projects.projects.isLoading; */
 
   // console.log("userLogged dashboard", userLogged);
   // console.log("projects dashboard", projects.projects.isLoading);
-  if (isLoading) return <div style={LoadingStyle}>Loading...</div>;
+  if (true/* isLoading */) return <div style={LoadingStyle}>Loading...</div>;
   else {
     return (
       <Wrapper>
-        {userLogged.userLogged.userInfo.succes
+        {/* {userLogged.userLogged.userInfo.succes
           ? <div className='wrapper-dash'>
             <NavBar links={links} />
 
@@ -50,7 +50,7 @@ const Dashboard = () => {
             </div>
           : <div>
               <NavBar links={links_noSession} />
-            </div>}
+            </div>} */}
           <Footer />
       </Wrapper>
     );

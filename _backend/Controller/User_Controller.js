@@ -9,18 +9,18 @@ const Register = (req, res) => {
   if (req.body !== null) {
     User.findOne({
       where: {
-        email: req.body.email,
-      },
+        email: req.body.email
+      }
     })
-      .then((candidat) => {
+      .then(candidat => {
         if (!candidat) return bcrypt.hashSync(password, 12);
       })
-      .then((hashPassword) => {
+      .then(hashPassword => {
         const newUser = new User({
           firstName: firstName,
           lastName: lastName,
           email: email,
-          password: hashPassword,
+          password: hashPassword
         });
         // req.session.user = newUser.id;
         return newUser.save();
@@ -35,8 +35,8 @@ const Login = async (req, res) => {
 
   let existUser = await User.findOne({
     where: {
-      email: email,
-    },
+      email: email
+    }
   });
   //  console.log("existUser", existUser);
   if (existUser) {
@@ -45,18 +45,24 @@ const Login = async (req, res) => {
     if (doMatch) {
       //  req.session.user = existUser.id;
       // console.log("req.session", req.session.user);
-      return res.send({ succes: true, token: token });
+      let capitalizeUser = `${existUser.firstName[0]} ${existUser.lastName[0]}`;
+      return res.send({
+        succes: true,
+        token: token,
+        userProfile: UserProfile(existUser),
+        capitalizeUser: capitalizeUser
+      });
     } else return res.send({ succes: false });
   } else return res.send({ succes: false });
 };
 
-const UserProfile = (User) => {
+const UserProfile = User => {
   let profile = {
     firstName: User.firstName,
     lastName: User.lastName,
     email: User.email,
     role: User.role,
-    urlPhoto: User.urlPhoto,
+    urlPhoto: User.urlPhoto
   };
   return profile;
 };
@@ -66,11 +72,17 @@ const AuthChecker = async (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, process.env.secretKey);
-    // console.log("verified", verified);
+    console.log("verified", verified);
     if (!verified) return res.send({ succes: false });
     const user = await User.findOne({ _id: verified.id });
+    let capitalizeUser = `${user.firstName[0]} ${user.lastName[0]}`;
+    console.log("user", user);
     if (!user) return res.send({ succes: false });
-    return res.send({ succes: true, userProfile: UserProfile(user) });
+    return res.send({
+      succes: true,
+      userProfile: UserProfile(user),
+      capitalizeUser: capitalizeUser
+    });
   } catch (error) {
     console.log("err", error.toString());
     return res.send({ succes: false });
@@ -79,10 +91,10 @@ const AuthChecker = async (req, res, next) => {
 const GetAllUsers = async (req, res) => {
   let listUsers_String = [];
   let allUsers = await User.findAll({
-    attributes: ["firstName", "lastName"],
+    attributes: ["firstName", "lastName"]
   });
 
-  allUsers.forEach((element) => {
+  allUsers.forEach(element => {
     listUsers_String.push(`${element.firstName} ${element.lastName}`);
   });
 
@@ -93,7 +105,7 @@ module.exports = {
   Register: Register,
   Login: Login,
   AuthChecker: AuthChecker,
-  GetAllUsers: GetAllUsers,
+  GetAllUsers: GetAllUsers
   /* UserProfile: UserProfile, */
 };
 

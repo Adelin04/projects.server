@@ -9,7 +9,7 @@ import EditProject from "./components/Projects/EditProject";
 import FinishedProjects from "./components/Projects/FinishedProjects";
 import NewProject from "./components/Projects/NewProject";
 // import SettingUserProfile from "./components/UserProfile/SettingUserProfile";
-import { ProjectsProvider } from "../src/components/Context/ProjectsContext";
+// import { ProjectsProvider } from "../src/components/Context/ProjectsContext";
 import { UserProvider } from "./components/Context/UserContext";
 
 //React Router
@@ -22,7 +22,7 @@ const App = () => {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/" component={Home} />
-            <ProjectsProvider>
+            {/* <ProjectsProvider> */}
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/get/project/:id" component={EditProject} />
               <Route exact path="/new-project" component={NewProject} />
@@ -36,7 +36,7 @@ const App = () => {
                 path="/user-profile"
                 component={SettingUserProfile}
               /> */}
-            </ProjectsProvider>
+            {/* </ProjectsProvider> */}
           </UserProvider>
         </Switch>
       </BrowserRouter>
