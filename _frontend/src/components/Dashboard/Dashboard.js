@@ -11,12 +11,12 @@ import { ProjectsContext } from "../Context/ProjectsContext";
 const links = [
   { url: "/", link: "Home" },
   { url: "/new-project", link: "New Project" },
-  { url: "/finished-projects", link: "Finished Projects" }
+  { url: "/finished-projects", link: "Finished Projects" },
 ];
 
 const links_noSession = [
   { url: "/login", link: "LogIn" },
-  { url: "/register", link: "SignUp" }
+  { url: "/register", link: "SignUp" },
 ];
 
 const LoadingStyle = {
@@ -25,36 +25,37 @@ const LoadingStyle = {
   alignItems: "center",
   margin: "auto",
   fontSize: "30px",
-  color: "var(--myGreen)"
+  color: "var(--myGreen)",
 };
 
 const Dashboard = () => {
-/*   const userLogged = useContext(UserContext);
+  const { isAuth } = useContext(UserContext).userLogged;
   const projects = useContext(ProjectsContext);
-  const isLoading = projects.projects.isLoading; */
+  // const isLoading = projects.projects.isLoading;
 
   // console.log("userLogged dashboard", userLogged);
   // console.log("projects dashboard", projects.projects.isLoading);
-  if (true/* isLoading */) return <div style={LoadingStyle}>Loading...</div>;
-  else {
-    return (
-      <Wrapper>
-        {/* {userLogged.userLogged.userInfo.succes
-          ? <div className='wrapper-dash'>
-            <NavBar links={links} />
+  /* if (isLoading) return <div style={LoadingStyle}>Loading...</div>;
+  else { */
+  return (
+    <Wrapper>
+      {isAuth ? (
+        <div className="wrapper-dash">
+          <NavBar links={links} />
 
-                <div className='dashboard'>
-                <ProjectsList />
-                </div>
-              
-            </div>
-          : <div>
-              <NavBar links={links_noSession} />
-            </div>} */}
-          <Footer />
-      </Wrapper>
-    );
-  }
+          <div className="dashboard">
+            <ProjectsList />
+          </div>
+        </div>
+      ) : (
+        <div>
+          <NavBar links={links_noSession} />
+        </div>
+      )}
+      <Footer />
+    </Wrapper>
+  );
+  // }
 };
 
 export default Dashboard;
@@ -67,15 +68,15 @@ const Wrapper = styled.section`
   width: 100%;
   height: 100%;
   margin: auto;
-  
-  .wrapper-dash{    
+
+  .wrapper-dash {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
   }
-  
+
   .dashboard {
     display: flex;
     flex-direction: column;

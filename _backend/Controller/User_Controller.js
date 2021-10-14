@@ -76,7 +76,7 @@ const AuthChecker = async (req, res, next) => {
     if (!verified) return res.send({ succes: false });
     const user = await User.findOne({ _id: verified.id });
     let capitalizeUser = `${user.firstName[0]} ${user.lastName[0]}`;
-    console.log("user", user);
+    // console.log("user", user);
     if (!user) return res.send({ succes: false });
     return res.send({
       succes: true,

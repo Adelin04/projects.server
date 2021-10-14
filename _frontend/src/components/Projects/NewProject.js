@@ -25,7 +25,11 @@ const year = new Date().getFullYear(); */
 const NewProject = () => {
   const { projects, dispatch } = useContext(ProjectsContext);
   const { userLogged } = useContext(UserContext);
-  // console.log('userLogged',userLogged);
+  
+  const { projectsList} = useContext(ProjectsContext).projects;
+  const { userLoggedInfo } = useContext(UserContext).userLogged;
+
+  console.log("projectsList", projects);
 
   const [projectName, setProjectName] = useState("");
   const [projectTime, setProjectTime] = useState("");
@@ -87,15 +91,15 @@ const NewProject = () => {
     setButton("Loading...");
 
     const dataNewProject = {
-      /* projectName: projectName,
+      projectName: projectName,
       projectTeam: projectTeam.toString(),
       projectTime: projectTime,
       projectDetails: projectDetails,
-      projectOwner: userLogged.userInfo.user.email,
-      photoProjectOwner: userLogged.userInfo.user.email, */
+      projectOwner: userLoggedInfo.email,
+      photoProjectOwner: userLoggedInfo.projectOwnerPhoto,
     };
 
-    /*     console.log(dataNewProject); */
+    console.log(dataNewProject);
     fetch(`${URL_HEROKU}/project/post/newProject`, {
       method: "POST",
       headers: {
@@ -105,12 +109,12 @@ const NewProject = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log('data',data);
         if (data.succes) {
           setIsSucces(data.succes);
           dispatch({
             type: ADD_PROJECT,
-            payload: [...projects.projects, data.newProject],
+            payload: [...projectsList, data.newProject],
           });
         } else {
           setIsSucces(data.succes);

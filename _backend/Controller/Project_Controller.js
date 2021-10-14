@@ -1,28 +1,44 @@
-const Project = require("../Models/Project_Model");
+const { Op } = require("sequelize");
 
-const GetProjectByUser = (req, res) => {};
+const Projects = require("../Models/Project_Model");
+
+const GetProjectByUser = async (req, res) => {
+  let userLooged = "Adelin Marin";
+  const listP = await Projects.findAll({
+    where: {
+      projectTeam: {
+        [Op.like]: "%" + /* request.body.query */ userLooged + "%",
+      },
+    },
+  });
+  console.log("projects", listP);
+  res.send({ succes: true, projectsList: listP });
+};
 
 const PostCreateNewProject = (req, res) => {
   const {
-    projectsName,
+    projectName,
     projectTeam,
     projectTime,
+    projectDetails,
     projectOwner,
-    projectOwnerPhoto
+    projectOwnerPhoto,
   } = req.body;
 
   if (req.body !== null) {
-    Project.findOne({
-      where: { projectsName: projectsName }
-    }).then(findProject => {
+    Projects.findOne({
+      where: { projectName: projectName },
+    }).then((findProject) => {
       if (!findProject) {
-        const newProject = new Project(
-          projectsName,
+        const newProject = new Projects({
+          projectName,
           projectTeam,
           projectTime,
+          projectDetails,
           projectOwner,
-          projectOwnerPhoto
-        );
+          projectOwnerPhoto,
+        });
+        console.log(newProject);
         res.send({ succes: true });
         return newProject.save();
       } else res.send({ succes: false });
@@ -32,5 +48,5 @@ const PostCreateNewProject = (req, res) => {
 
 module.exports = {
   GetProjectByUser: GetProjectByUser,
-  PostCreateNewProject: PostCreateNewProject
+  PostCreateNewProject: PostCreateNewProject,
 };

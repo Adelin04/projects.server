@@ -6,14 +6,14 @@ import NavLinkTemplate from "./NavLinkTemplate";
 import { URL_HEROKU } from "../_Utils/Dependency";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
-/* import { UserContext } from "../Context/UserContext"; */
+import { UserContext } from "../Context/UserContext";
 import { NavLink } from "react-router-dom";
-/* import PopUp_UserProfile from "../PopUp/PopUp_UserProfile"; */
+import PopUp_UserProfile from "../PopUp/PopUp_UserProfile";
 
 //NavBar
 const logo = <FontAwesomeIcon icon={faProjectDiagram} />;
 const NavBar = ({ links }) => {
-  /* const userLogged = useContext(UserContext); */
+  const userLogged = useContext(UserContext);
   const [visibility, setVisibility] = useState("hidden");
 
   const handleLogOut = async () => {
@@ -24,9 +24,7 @@ const NavBar = ({ links }) => {
 
   return (
     <div className="navBar">
-      <div className="logo">
-        {logo}
-      </div>
+      <div className="logo">{logo}</div>
       <div className="navBar-links">
         {links.map((link, index) => {
           return (
@@ -36,7 +34,7 @@ const NavBar = ({ links }) => {
           );
         })}
       </div>
-    {/*   <div
+      <div
         className="profile"
         onMouseOver={() => setVisibility("visible")}
         onMouseOut={() => setVisibility("hidden")}
@@ -49,17 +47,18 @@ const NavBar = ({ links }) => {
           }}
           to={"/login"}
         >
-          {" "}{userLogged && userLogged !== undefined
+          {" "}
+          {userLogged && userLogged !== null
             ? `${userLogged.userLogged.capitalizeUserProfile}`
-            : "X X"}
+            : null}
         </NavLink>
       </div>
-      {visibility === "visible"
-        ? <PopUp_UserProfile
-            visibility={visibility}
-            setVisibility={setVisibility}
-          />
-        : null} */}
+      {visibility === "visible" ? (
+        <PopUp_UserProfile
+          visibility={visibility}
+          setVisibility={setVisibility}
+        />
+      ) : null}
     </div>
   );
 };

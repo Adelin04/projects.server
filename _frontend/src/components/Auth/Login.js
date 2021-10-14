@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Auth.css";
 
 import { URL_HEROKU } from "../_Utils/Dependency";
@@ -6,13 +6,17 @@ import NavBar from "../Nav/NavBar";
 import Button from "../_Utils/Button";
 import Footer from "../Footer/Footer";
 import { Redirect } from "react-router-dom";
-import { SET_AUTH, SET_CAPITALIZE_USER_PROFILE, SET_USERLOGGED_INFO } from "../Reducer/Action";
+import {
+  SET_AUTH,
+  SET_CAPITALIZE_USER_PROFILE,
+  SET_USERLOGGED_INFO,
+} from "../Reducer/Action";
 import { UserContext } from "../Context/UserContext";
 // import { ProjectsContext } from "../Context/ProjectsContext";
 
 const links = [
   { url: "/", link: "Home" },
-  { url: "/register", link: "Sign up" }
+  { url: "/register", link: "Sign up" },
 ];
 
 const Login = () => {
@@ -27,7 +31,7 @@ const Login = () => {
   // const [token, setToken] = useState("");
   const [isAuth, setIsAuth] = useState(false);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     let body = { email: email, password: password };
     setBtnMsg("Loading...");
@@ -38,19 +42,22 @@ const Login = () => {
       fetch(`${URL_HEROKU}/auth/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       })
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           console.log("data", data);
           const { succes, token, userProfile, capitalizeUser } = data;
           if (succes) {
             setIsAuth(succes);
             dispatch({ type: SET_AUTH, payload: data.succes });
             dispatch({ type: SET_USERLOGGED_INFO, payload: userProfile });
-            dispatch({ type: SET_CAPITALIZE_USER_PROFILE, payload: capitalizeUser });
+            dispatch({
+              type: SET_CAPITALIZE_USER_PROFILE,
+              payload: capitalizeUser,
+            });
             localStorage.setItem("token", token);
             console.log("userLogged -> ", userLogged);
           } else {
@@ -74,7 +81,7 @@ const Login = () => {
     textAlign: "center",
     fontWeight: "bolder",
     fontSize: "20px",
-    color: "salmon"
+    color: "salmon",
   };
   const dynamicStyleSpiner = {
     margin: "200px auto 10px ",
@@ -82,10 +89,10 @@ const Login = () => {
     textAlign: "center",
     fontWeight: "bolder",
     fontSize: "35px",
-    color: "salmon"
+    color: "salmon",
   };
 
-  if (isAuth) {
+  if (userLogged.isAuth) {
     return <Redirect to={"/dashboard"} />;
   } else
     return (
@@ -94,15 +101,12 @@ const Login = () => {
         <NavBar links={links} />
 
         <div className="form">
-          {msg &&
-            <div style={dynamicStyle}>
-              {msg}
-            </div>}
+          {msg && <div style={dynamicStyle}>{msg}</div>}
           <form className="form-content" onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
             <input
               className="input-dataUser"
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
               autoFocus={true}
               required
@@ -113,7 +117,7 @@ const Login = () => {
             <label htmlFor="password">Password</label>
             <input
               className="input-dataUser"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
               required
               type="password"

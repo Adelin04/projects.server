@@ -1,21 +1,19 @@
 import React, { useEffect, useReducer } from "react";
 import { URL_HEROKU } from "../_Utils/Dependency";
-import { projects_reducer } from "../Reducer/Projects_Reducer";
+import { Projects_reducer } from "../Reducer/Projects_Reducer";
 import { FETCH_PROJECTS } from "../Reducer/Action";
 
 const ProjectsContext = React.createContext();
 
+const initialState = {
+  projectsList: [],
+  isLoading: true,
+};
 const ProjectsProvider = ({ children }) => {
-  const initialState = {
-    projects: [],
-    isAuth: false,
-    isLoading: true,
-  };
-
-  const [projects, dispatch] = useReducer(projects_reducer, initialState);
+  const [projects, dispatch] = useReducer(Projects_reducer, initialState);
 
   const fetchProjects = async () => {
-    await fetch(`${URL_HEROKU}/get/projects`)
+    await fetch(`${URL_HEROKU}/project/get/projects`)
       .then((response) => response.json())
       .then((data) => {
         console.log("useEffect ProjectsInfo -> ", data);
@@ -24,13 +22,11 @@ const ProjectsProvider = ({ children }) => {
             dispatch({
               type: FETCH_PROJECTS,
               payload: data,
-              isAuth: data.succes,
               isLoading: false,
             });
           } else {
             dispatch({
               type: FETCH_PROJECTS,
-              isAuth: data.succes,
               isLoading: false,
             });
           }
@@ -39,7 +35,7 @@ const ProjectsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    /* fetchProjects(); */
+    fetchProjects();
   }, []);
 
   return (

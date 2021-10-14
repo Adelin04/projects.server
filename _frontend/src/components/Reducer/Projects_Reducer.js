@@ -8,7 +8,7 @@ import {
   CHANGE_PATH_USER_IMAGE,
 } from "../Reducer/Action";
 
-export const projects_reducer = (state, action) => {
+export const Projects_reducer = (state, action) => {
   switch (action.type) {
     case FETCH_PROJECTS:
       return {

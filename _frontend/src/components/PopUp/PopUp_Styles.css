@@ -1,0 +1,128 @@
+.wrapper-popUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  top: 2%;
+  right: 4%;
+  width: 200px;
+  height: 220px;
+  background-color: transparent;
+}
+
+.conainer-popUp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: auto;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+      0deg,
+      rgb(147, 207, 208) 0%,
+      rgb(242, 211, 145) 100%
+    )
+    fixed;
+}
+
+.popUp-userName {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bolder;
+  margin: 0px auto;
+}
+
+.popUp-logout-btn a,
+.popUp-setting-btn a {
+  color: var(--myGreen);
+}
+
+.popUp-role {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 50px;
+  font-size: 11px;
+  font-weight: bolder;
+}
+
+.popUp-setting-btn a {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.popUp-logout-btn {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.wrapper-popUp-setting-popUp-logout {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 700px) {
+  .wrapper-popUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    top: 3%;
+    right: 5%;
+    width: 140px;
+    height: 230px;
+    background-color: transparent;
+  }
+  
+  .conainer-popUp {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 150px;
+    background: rgb(34, 193, 195);
+    background: linear-gradient(
+      0deg,
+      rgb(147, 207, 208) 0%,
+      rgb(242, 211, 145) 100%
+      )
+      fixed;
+    }
+    
+    .popUp-role {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      height: auto;
+      font-size: 8px;
+      font-weight: bold;
+    }
+  }
+  
+  @media only screen and (min-width: 1450px) {
+    .wrapper-popUp {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: absolute;
+      top: 2%;
+      right: 7%;
+      width: 200px;
+      height: 220px;
+      background-color: transparent;
+    }
+  }
+  
