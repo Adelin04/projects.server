@@ -1,0 +1,18 @@
+export const LOADING = "LOADING";
+export const ERROR = "ERROR";
+export const LOGOUT = "LOGOUT";
+export const AUTH_CHECKER = "AUTH_CHECKER";
+export const SET_AUTH = "SET_AUTH";
+export const SET_USERLOGGED_INFO = "SET_USERLOGGED_INFO";
+
+export const ADD_PROJECT = "ADD_PROJECT";
+export const DELETE_PROJECT = "DELETE_PROJECT";
+export const REMOVE_PROJECT = "REMOVE_PROJECT";
+export const EDIT_DONE = "EDIT_DONE";
+export const DONE_PROJECTS = "DONE_PROJECTS";
+export const FETCH_PROJECTS = "FETCH_PROJECTS";
+
+export const FETCH_USER_LOGGED = "FETCH_USER_LOGGED";
+export const SET_CAPITALIZE_USER_PROFILE = "SET_CAPITALIZE_USER_PROFILE";
+
+export const CHANGE_PATH_USER_IMAGE = "CHANGE_PATH_USER_IMAGE";

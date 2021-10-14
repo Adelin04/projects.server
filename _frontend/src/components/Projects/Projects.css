@@ -1,0 +1,456 @@
+.projects {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  display: block;
+  margin: 5px auto;
+  min-width: 300px;
+  max-width: 300px;
+  height: 35px;
+  min-height: 25px;
+  border: 1px solid #1ba12d;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  outline: none;
+}
+
+.user-list {
+  cursor: not-allowed;
+}
+
+.logoAddUser {
+  min-width: 50px;
+  text-align: center;
+  margin-left: 85%;
+  color: #1ba12d;
+  font-size: 30px;
+  z-index: 5;
+  cursor: pointer;
+  /*   position: sticky;
+  margin-left: 1100px;
+  cursor: pointer; */
+}
+
+.wrapper-form {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  width: 700px;
+  margin: auto;
+  height: auto;
+}
+
+.form-content {
+  width: auto;
+  margin: 0px;
+}
+
+.userListStyle-ul {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  left: 75%;
+  top: 43%;
+  padding: 5px;
+  width: auto;
+  height: auto;
+  background-color: #7fce8a34;
+  border-radius: 15px;
+}
+
+.input-listUsers {
+  display: flex;
+  align-self: center;
+  height: 25px;
+  width: 30px;
+  margin: 0px;
+  cursor: pointer;
+}
+
+li {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 2px 0px;
+  width: auto;
+  min-height: 30px;
+  text-align: left;
+  list-style: none;
+  cursor: pointer;
+  padding: 5px 5px;
+}
+
+.card-project {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 20px auto;
+  width: 80%;
+  border: solid 1px rgba(0, 0, 0, 0.076);
+  border-radius: 10px;
+}
+
+.wrapper-titleProject-btnProject {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-card-project {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+  height: auto;
+  padding: 15px 5px;
+}
+
+.card-project:hover {
+  background-color: rgba(197, 242, 216, 0.275);
+}
+
+.wrapper-info-card-project-projectName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 50px;
+  /*   background-color: azure; */
+}
+
+.info-card-project-projectName {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+  margin: 0px;
+  width: auto;
+  height: 50px;
+}
+
+.wrapper-btn-colaps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+
+.wrapper-card-project-owner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  /*   background-color: #1ba12d; */
+}
+
+.card-project-owner {
+  display: flex;
+  align-items: center;
+}
+
+.card-project-owner-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.card-project-owner-name {
+  padding: 0px 0px 0px 5px;
+}
+
+.wrapper-info-card-project-projectTeam-projectTime-projectDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card-project-projectTeam,
+.info-card-project-projectTime,
+.info-card-project-projectDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+}
+
+.label-info-card-project-projectTeam,
+.label-info-card-project-projectTime,
+.label-info-card-project-projectDetails {
+  margin: 0px;
+  color: #1ba12d;
+  width: auto;
+  padding-right: 20px;
+}
+
+.wrapper-label-info-card-project-projectTeam,
+.wrapper-label-info-card-project-projectTime,
+.wrapper-label-info-card-project-projectDetails {
+  text-align: left;
+}
+
+.projectTeam,
+.projectTime,
+.projectDetails {
+  display: flex;
+}
+
+.projectTime {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.container-timeLeft {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+}
+
+.wrapper-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 20%;
+  height: 11px;
+  border-radius: 5px;
+  border: black solid 1px;
+  background-color: #1ba12d21;
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* background-color: #1ba12d; */
+  height: 9px;
+  border-radius: 4px;
+  margin: 0px;
+  padding: 1px 0px 1px 0px;
+  z-index: 1;
+}
+
+.remainingTime {
+  display: flex;
+  align-items: center;
+  padding: 0px 5px;
+}
+
+.info-card-project-logo {
+  margin-right: 5px;
+  color: #1ba12d;
+}
+
+.btn-card-project {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding: 15px 5px;
+}
+
+.btn-card-project-del,
+.btn-card-project-edit,
+.btn-card-project-done {
+  width: auto;
+  height: 35px;
+  margin: 5px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: #1ba12d;
+  background-color: transparent;
+  outline: none;
+}
+
+.btn-card-project-del:hover,
+.btn-card-project-arhiva:hover,
+.btn-card-project-edit:hover,
+.btn-card-project-done:hover {
+  border: 1px solid #1ba12d;
+}
+
+.btn-card-project-del:hover {
+  border: 1px solid #1ba12d;
+  color: red;
+}
+
+.fa-trash :hover {
+  color: red;
+}
+
+/* .buttons {
+  margin-right: 25px;
+} */
+
+.btn-colaps {
+  display: flex;
+  align-self: flex-end;
+  width: auto;
+  height: auto;
+  margin: 0px 15px 5px 0px;
+  padding: 0px;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+  background-color: transparent;
+  color: #1ba12d;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.btn-colaps:hover {
+  color: coral;
+}
+
+.btn-submit-newProject {
+  display: block;
+  width: 150px;
+  padding: 5px;
+  margin: 30px auto 55px;
+  font-size: 20px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  background-color: #1ba12d;
+}
+
+/*FinishedProjects*/
+.wrapper-finished-projects {
+  width: 100%;
+  height: 100%;
+}
+
+.finished-projects {
+  display: flex;
+  width: 100%;
+}
+
+.container-finishedProjects{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media only screen and (max-width: 750px) {
+  /*New Project*/
+  .wrapper-form {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    width: 350px;
+    margin: auto;
+    height: auto;
+  }
+
+  .userListStyle-ul {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    left: 75%;
+    top: 52%;
+    padding: 5px;
+    width: auto;
+    height: auto;
+    background-color: #7fce8a34;
+    border-radius: 15px;
+  }
+  /*....................................*/
+
+  .wrapper-titleProject-btnProject {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-project {
+    display: flex;
+    text-align: center;
+    border: solid 1px rgba(0, 0, 0, 0.076);
+    border-radius: 10px;
+  }
+
+  .info-card-project {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0px;
+  }
+
+  .wrapper-info-card-project-projectName {
+    display: flex;
+    width: auto;
+    justify-content: left;
+    height: 50px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .info-card-project-projectTeam,
+  .info-card-project-projectTime,
+  .info-card-project-projectDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 5px;
+    padding: 5px;
+  }
+  .info-card-project-projectTime {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+  }
+  /*   .wrapper700px {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+  } */
+  /*   .container-timeLeft {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+} */
+
+  .info-card-project-logo {
+    margin: 0px 10px 0px 0px;
+  }
+
+  .buttons {
+    margin: auto;
+  }
+
+  .btn-colaps {
+    margin-bottom: 5px;
+    width: 25px;
+    height: 15px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: transparent;
+    color: green;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+}
