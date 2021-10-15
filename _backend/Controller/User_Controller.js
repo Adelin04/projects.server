@@ -3,11 +3,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const Register = (req, res) => {
+const Register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   if (req.body !== null) {
-    User.findOne({
+    await User.findOne({
       where: {
         email: req.body.email
       }
@@ -38,7 +38,7 @@ const Login = async (req, res) => {
       email: email
     }
   });
-  //  console.log("existUser", existUser);
+  console.log("existUser", existUser);
   if (existUser) {
     let doMatch = await bcrypt.compare(password, existUser.password);
     let token = jwt.sign({ user_id: User.id, email }, process.env.secretKey);
@@ -64,19 +64,24 @@ const UserProfile = User => {
     role: User.role,
     urlPhoto: User.urlPhoto
   };
+  console.log("profile", profile);
   return profile;
 };
 
-const AuthChecker = async (req, res, next) => {
+const AuthChecker = async (req, res) => {
   const token = req.headers.authorization;
 
   try {
     const verified = jwt.verify(token, process.env.secretKey);
     console.log("verified", verified);
     if (!verified) return res.send({ succes: false });
-    const user = await User.findOne({ _id: verified.id });
+    const user = await User.findOne({
+      where: {
+        email: verified.email
+      }
+    }); /* await User.findOne({ id: verified.id }); */
     let capitalizeUser = `${user.firstName[0]} ${user.lastName[0]}`;
-    // console.log("user", user);
+    console.log("user -> checker", user);
     if (!user) return res.send({ succes: false });
     return res.send({
       succes: true,
@@ -88,6 +93,7 @@ const AuthChecker = async (req, res, next) => {
     return res.send({ succes: false });
   }
 };
+
 const GetAllUsers = async (req, res) => {
   let listUsers_String = [];
   let allUsers = await User.findAll({

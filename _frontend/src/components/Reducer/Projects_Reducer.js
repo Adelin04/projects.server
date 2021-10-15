@@ -5,7 +5,7 @@ import {
   FETCH_PROJECTS,
   DONE_PROJECTS,
   REMOVE_PROJECT,
-  CHANGE_PATH_USER_IMAGE,
+  CHANGE_PATH_USER_IMAGE
 } from "../Reducer/Action";
 
 export const Projects_reducer = (state, action) => {
@@ -13,9 +13,8 @@ export const Projects_reducer = (state, action) => {
     case FETCH_PROJECTS:
       return {
         ...state,
-        projects: action.payload,
-        isLoading: action.isLoading,
-        isAuth: action.isAuth,
+        projectsList: action.payload,
+        isLoading_Projects: action.isLoading_Projects
       };
     case ADD_PROJECT:
       return { ...state, projects: action.payload };
