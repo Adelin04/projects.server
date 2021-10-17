@@ -17,7 +17,7 @@ const initialState = {
 };
 const UserProvider = ({ children }) => {
   const [userLogged, dispatch_user] = useReducer(User_Reducer, initialState);
-/*   console.log("user", userLogged); */
+  console.log("user", userLogged);
   const fetchUserInfo = async (token) => {
     await fetch(`${URL_HEROKU}/auth/authChecker`, {
       headers: { authorization: token },

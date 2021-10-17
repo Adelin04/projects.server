@@ -69,6 +69,7 @@ const Login = async (req, res) => {
 
 const UserProfile = (User) => {
   let profile = {
+    id: User.id,
     firstName: User.firstName,
     lastName: User.lastName,
     email: User.email,
