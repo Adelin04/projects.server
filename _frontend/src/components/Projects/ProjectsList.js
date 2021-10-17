@@ -32,14 +32,14 @@ const links_noSession = [
 ];
 
 const ProjectsList = () => {
-  const { projects, dispatch } = useContext(ProjectsContext);
+  const { projects, dispatch_projects } = useContext(ProjectsContext);
   const { isLoading_Projects } = useContext(ProjectsContext).projects;
   // const  projects.projectsList  = useContext(ProjectsContext).projects.projectsList;
   const { isAuth } = useContext(UserContext).userLogged;
 
-/*   console.log("isLoading_Projects", isLoading_Projects);
+  /*   console.log("isLoading_Projects", isLoading_Projects);
   console.log("projectsList", projects.projectsList); */
-  
+
   const LoadingStyle = {
     display: "block",
     margin: "50px auto",
@@ -82,12 +82,14 @@ const ProjectsList = () => {
   //---------btn-Done
   const handleDone = (event) => {
     const id = Number(event.target.id);
-
+    console.log(id);
     let TMP_list = [];
-    TMP_list = projects.projectsList.filter((project) => project.projectID === id);
+    TMP_list = projects.projectsList.filter(
+      (project) => project.projectID === id
+    );
     const data = { projects: TMP_list };
 
-    fetch(`${URL_HEROKU}move/finished-project/${id}`, {
+    fetch(`${URL_HEROKU}/project/move/finished-project/${id}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -96,13 +98,14 @@ const ProjectsList = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.succes) {
-          // console.log(data);
+        const { succes } = data;
+        if (succes) {
           let TMP_list = [];
           TMP_list = projects.projectsList.filter(
-            (project) => Number(project.projectID) !== id
+            (project) => Number(project.id) !== id
           );
-          dispatch({ type: DONE_PROJECTS, payload: TMP_list });
+          console.log("TMP_list", TMP_list);
+          dispatch_projects({ type: DONE_PROJECTS, payload: TMP_list });
         }
       })
       .catch((err) => console.log(err));
@@ -112,17 +115,18 @@ const ProjectsList = () => {
   const handleDelete = async (event) => {
     const id = Number(event.target.id);
 
-    await fetch(`${URL_HEROKU}delete/project/${id}`, {
+    await fetch(`${URL_HEROKU}/project/delete/project/${id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.succes) {
+        const { succes } = data;
+        if (succes) {
           let TMP_list = [];
           TMP_list = projects.projectsList.filter(
-            (project) => Number(project.projectID) !== id
+            (project) => Number(project.id) !== id
           );
-          dispatch({ type: DELETE_PROJECT, payload: TMP_list });
+          dispatch_projects({ type: DELETE_PROJECT, payload: TMP_list });
         }
       })
       .catch((err) => console.log(err));
@@ -141,7 +145,7 @@ const ProjectsList = () => {
                     <div style={{ width: "100%" }} key={key}>
                       <ProjectTemplate
                         logo={logo}
-                        projectId={project.projectID}
+                        projectId={project.id}
                         projectName={project.projectName}
                         projectTime={project.projectTime}
                         projectTeam={project.projectTeam}

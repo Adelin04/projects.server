@@ -11,6 +11,7 @@ const UserRoutes = require("./Routes/UserRoutes");
 const ProjectRoutes = require("./Routes/ProjectRoutes");
 const sequelize = require("./Repository/DataBase");
 
+
 const port = process.env.PORT || 4000;
 
 app.use(cookieParser());
@@ -52,9 +53,10 @@ app.use(
 app.use("/auth/", UserRoutes);
 app.use("/project/", ProjectRoutes);
 
+// await FinishedProjects.sync({ force: true });
 sequelize.sync({
-  /* force: false,
-  alter: true */
+  // force: true,
+  // alter: true,
 });
 
 app.listen(port);

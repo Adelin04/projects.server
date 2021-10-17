@@ -13,6 +13,10 @@ const Project = sequelize.define("project", {
   projectTime: { type: Sequelize.INTEGER },
   projectOwner: { type: Sequelize.STRING },
   projectOwnerPhoto: { type: Sequelize.STRING },
+  isFinished: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   createdAt: {
     defaultValue: Sequelize.fn("now"),
     type: Sequelize.DATE,
