@@ -1,0 +1,36 @@
+.setting {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+h1,
+h3 {
+  text-align: center;
+}
+
+.personal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: auto;
+  margin: 0px auto;
+/*   background-color: aqua; */
+}
+
+.personal-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.photo{
+    margin: 25px auto;
+}

@@ -1,7 +1,7 @@
 import {
   SET_CAPITALIZE_USER_PROFILE,
   SET_AUTH,
-  SET_USERLOGGED_INFO
+  SET_USERLOGGED_INFO,
 } from "../Reducer/Action";
 
 export const User_Reducer = (state, action) => {

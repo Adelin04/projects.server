@@ -2,53 +2,47 @@ import React, { useContext, useEffect, useReducer } from "react";
 import { URL_HEROKU } from "../_Utils/Dependency";
 import { Projects_reducer } from "../Reducer/Projects_Reducer";
 import { FETCH_PROJECTS } from "../Reducer/Action";
-import { UserContext } from "../Context/UserContext";
+import { UserContext } from "./UserContext";
 
 const ProjectsContext = React.createContext();
 
 const initialState = {
   projectsList: [],
-  isLoading_Projects: true
+  isLoading_Projects: true,
 };
 const ProjectsProvider = ({ children }) => {
-  const [projects, dispatch] = useReducer(Projects_reducer, initialState);
-  const { userLogged } = useContext(UserContext);
-
-  const fetchProjects = async () => {
-    const email_userLogged = { userLogged: userLogged.userLoggedInfo.email };
+  const [projects, dispatch_projects] = useReducer(
+    Projects_reducer,
+    initialState
+  );
+  /*   console.log("projects provider -> ", projects); */
+  const fetchProjects = async (token) => {
     await fetch(`${URL_HEROKU}/project/get/projects`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(email_userLogged)
+      headers: { authorization: token },
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log("useEffect ProjectsInfo -> ", data);
+      .then((response) => response.json())
+      .then((data) => {
+        const { projectsList } = data;
+
         if (data)
           if (data.succes) {
-            dispatch({
+            dispatch_projects({
               type: FETCH_PROJECTS,
-              payload: data,
-              isLoading_Projects: false
-            });
-          } else {
-            dispatch({
-              type: FETCH_PROJECTS,
-              isLoading_Projects: false
+              payload: projectsList,
+              isLoading_Projects: false,
             });
           }
       })
-      .catch(err => console.log(err.toString()));
+      .catch((err) => console.log(err.toString()));
   };
 
   useEffect(() => {
-    fetchProjects();
+    if (localStorage.getItem("token") !== null)
+      fetchProjects(localStorage.getItem("token"));
   }, []);
 
   return (
-    <ProjectsContext.Provider value={{ projects, dispatch }}>
+    <ProjectsContext.Provider value={{ projects, dispatch_projects }}>
       {children}
     </ProjectsContext.Provider>
   );

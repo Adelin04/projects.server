@@ -7,12 +7,13 @@ import Button from "../_Utils/Button";
 import Footer from "../Footer/Footer";
 import { Redirect } from "react-router-dom";
 import {
+  FETCH_PROJECTS,
   SET_AUTH,
   SET_CAPITALIZE_USER_PROFILE,
   SET_USERLOGGED_INFO,
 } from "../Reducer/Action";
 import { UserContext } from "../Context/UserContext";
-// import { ProjectsContext } from "../Context/ProjectsContext";
+import { ProjectsContext } from "../Context/ProjectsContext";
 
 const links = [
   { url: "/", link: "Home" },
@@ -20,16 +21,14 @@ const links = [
 ];
 
 const Login = () => {
-  const { userLogged, dispatch } = useContext(UserContext);
-  // const projects = useContext(ProjectsContext);
-  // console.log("projects", projects);
+  const { userLogged, dispatch_user } = useContext(UserContext);
+  const { projects, dispatch_projects } = useContext(ProjectsContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [btnMsg, setBtnMsg] = useState("LogIn");
   // const [token, setToken] = useState("");
-  const [isAuth, setIsAuth] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +37,7 @@ const Login = () => {
     setMsg(null);
 
     try {
-      console.log("userLogged <- ", userLogged);
+/*       console.log("userLogged <- ", userLogged); */
       fetch(`${URL_HEROKU}/auth/login`, {
         method: "POST",
         headers: {
@@ -49,17 +48,22 @@ const Login = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("data", data);
-          const { succes, token, userProfile, capitalizeUser } = data;
+          const { succes, token, userProfile, capitalizeUser, projectsList } =
+            data;
+          console.log("data.projectsList -> ", projectsList);
           if (succes) {
-            setIsAuth(succes);
-            dispatch({ type: SET_AUTH, payload: data.succes });
-            dispatch({ type: SET_USERLOGGED_INFO, payload: userProfile });
-            dispatch({
+            dispatch_user({ type: SET_AUTH, payload: data.succes });
+            dispatch_user({ type: SET_USERLOGGED_INFO, payload: userProfile });
+            dispatch_user({
               type: SET_CAPITALIZE_USER_PROFILE,
               payload: capitalizeUser,
             });
+            dispatch_projects({
+              type: FETCH_PROJECTS,
+              payload: projectsList,
+              isLoading_Projects: false,
+            });
             localStorage.setItem("token", token);
-            console.log("userLogged -> ", userLogged);
           } else {
             setMsg("User or Password is incorect");
             setBtnMsg("LogIn");

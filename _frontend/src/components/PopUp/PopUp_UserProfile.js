@@ -5,7 +5,7 @@ import "./PopUp_Styles.css";
 import { UserContext } from "../Context/UserContext";
 
 const handleLogOut = async () => {
-  const response = await fetch(`${URL_HEROKU}logout-user`);
+  //const response = await fetch(`${URL_HEROKU}logout-user`);
   // const responseJson = await response.json();
 };
 
@@ -42,6 +42,7 @@ const PopUp_UserProfile = ({ visibility, setVisibility }) => {
                   to="/"
                   onClick={() => {
                     localStorage.clear();
+                    window.location.href = "/";
                     handleLogOut();
                   }}
                 >

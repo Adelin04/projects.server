@@ -8,7 +8,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import EditProject from "./components/Projects/EditProject";
 import FinishedProjects from "./components/Projects/FinishedProjects";
 import NewProject from "./components/Projects/NewProject";
-// import SettingUserProfile from "./components/UserProfile/SettingUserProfile";
+import SettingUserProfile from "./components/UserProfile/SettingUserProfile";
 import { ProjectsProvider } from "../src/components/Context/ProjectsContext";
 import { UserProvider } from "./components/Context/UserContext";
 
@@ -31,11 +31,11 @@ const App = () => {
                 path="/finished-projects"
                 component={FinishedProjects}
               />
-              {/* <Route
+              <Route
                 exact
                 path="/user-profile"
                 component={SettingUserProfile}
-              /> */}
+              />
             </ProjectsProvider>
           </UserProvider>
         </Switch>

@@ -23,13 +23,13 @@ const month = new Date().getMonth();
 const year = new Date().getFullYear(); */
 
 const NewProject = () => {
-  const { projects, dispatch } = useContext(ProjectsContext);
+  const { projects, dispatch_projects } = useContext(ProjectsContext);
   const { userLogged } = useContext(UserContext);
-  
-  const { projectsList} = useContext(ProjectsContext).projects;
+
+  const { projectsList } = useContext(ProjectsContext).projects.projectsList;
   const { userLoggedInfo } = useContext(UserContext).userLogged;
 
-  console.log("projectsList", projects);
+  console.log("projectsList newP", projectsList);
 
   const [projectName, setProjectName] = useState("");
   const [projectTime, setProjectTime] = useState("");
@@ -109,12 +109,12 @@ const NewProject = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data',data);
+        console.log("data", data);
         if (data.succes) {
           setIsSucces(data.succes);
-          dispatch({
+          dispatch_projects({
             type: ADD_PROJECT,
-            payload: [...projectsList, data.newProject],
+            payload: [...projects.projectsList, dataNewProject],
           });
         } else {
           setIsSucces(data.succes);

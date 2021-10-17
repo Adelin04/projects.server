@@ -1,19 +1,26 @@
+const User = require("../Models/Users_Model");
 const { Op } = require("sequelize");
 const Projects = require("../Models/Project_Model");
+const jwt = require("jsonwebtoken");
 
 const GetProjectByUser = async (req, res) => {
-  const userLooged = await req.body /* "Adelin Marin" */;
-  console.log("userLooged.email", req.body);
+  const token = req.headers.authorization;
+  const { email } = jwt.verify(token, process.env.secretKey);
 
-  const listP = await Projects.findAll({
-    where: {
-      projectTeam: {
-        [Op.like]: "%" + userLooged + "%"
-      }
-    }
+  const userLogged = await User.findOne({
+    attributes: ["firstName", "lastName"],
+    where: { email: email },
   });
 
-  res.send({ succes: true, projectsList: listP });
+  const projectsList = await Projects.findAll({
+    where: {
+      projectTeam: {
+        [Op.like]: "%" + `${userLogged.firstName} ${userLogged.lastName}` + "%",
+      },
+    },
+  });
+
+  res.send({ succes: true, projectsList: projectsList });
 };
 
 const PostCreateNewProject = (req, res) => {
@@ -23,13 +30,13 @@ const PostCreateNewProject = (req, res) => {
     projectTime,
     projectDetails,
     projectOwner,
-    projectOwnerPhoto
+    projectOwnerPhoto,
   } = req.body;
 
   if (req.body !== null) {
     Projects.findOne({
-      where: { projectName: projectName }
-    }).then(findProject => {
+      where: { projectName: projectName },
+    }).then((findProject) => {
       if (!findProject) {
         const newProject = new Projects({
           projectName,
@@ -37,7 +44,7 @@ const PostCreateNewProject = (req, res) => {
           projectTime,
           projectDetails,
           projectOwner,
-          projectOwnerPhoto
+          projectOwnerPhoto,
         });
         console.log(newProject);
         res.send({ succes: true });
@@ -49,5 +56,5 @@ const PostCreateNewProject = (req, res) => {
 
 module.exports = {
   GetProjectByUser: GetProjectByUser,
-  PostCreateNewProject: PostCreateNewProject
+  PostCreateNewProject: PostCreateNewProject,
 };

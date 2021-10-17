@@ -30,13 +30,7 @@ const LoadingStyle = {
 
 const Dashboard = () => {
   const { isAuth } = useContext(UserContext).userLogged;
-  const projects = useContext(ProjectsContext);
-  // const isLoading = projects.projects.isLoading;
 
-  // console.log("userLogged dashboard", userLogged);
-  // console.log("projects dashboard", projects.projects.isLoading);
-  /* if (isLoading) return <div style={LoadingStyle}>Loading...</div>;
-  else { */
   return (
     <Wrapper>
       {isAuth ? (

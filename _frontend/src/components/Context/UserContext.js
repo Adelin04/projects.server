@@ -13,11 +13,11 @@ const UserContext = createContext();
 const initialState = {
   isAuth: false,
   userLoggedInfo: [],
-  capitalizeUserProfile: null,
+  capitalizeUserProfile: "X X",
 };
 const UserProvider = ({ children }) => {
-  const [userLogged, dispatch] = useReducer(User_Reducer, initialState);
-
+  const [userLogged, dispatch_user] = useReducer(User_Reducer, initialState);
+/*   console.log("user", userLogged); */
   const fetchUserInfo = async (token) => {
     await fetch(`${URL_HEROKU}/auth/authChecker`, {
       headers: { authorization: token },
@@ -27,16 +27,12 @@ const UserProvider = ({ children }) => {
         const { succes, userProfile, capitalizeUser } = data;
         // initialState.isAuth = succes;
         // initialState.userLoggedInfo = userProfile;
-        dispatch({ type: SET_AUTH, payload: succes });
-        dispatch({ type: SET_USERLOGGED_INFO, payload: userProfile });
-        dispatch({
+        dispatch_user({ type: SET_AUTH, payload: succes });
+        dispatch_user({ type: SET_USERLOGGED_INFO, payload: userProfile });
+        dispatch_user({
           type: SET_CAPITALIZE_USER_PROFILE,
           payload: capitalizeUser,
         });
-        console.log("useEffect Userinfo -> ", data);
-        console.log("useEffect isAuth -> ", initialState.isAuth);
-        console.log("useEffect userLoggedInfo-> ", initialState.userLoggedInfo);
-        console.log("useEffect userLogged -> ", userLogged);
       })
       .catch((err) => console.log(err));
   };
@@ -48,7 +44,7 @@ const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userLogged, dispatch }}>
+    <UserContext.Provider value={{ userLogged, dispatch_user }}>
       {children}
     </UserContext.Provider>
   );

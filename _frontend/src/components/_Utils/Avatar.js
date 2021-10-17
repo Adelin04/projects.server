@@ -11,7 +11,8 @@ import { UserContext } from "../Context/UserContext";
 
 const Avatar = () => {
   const { projects, dispatch } = useContext(ProjectsContext);
-  const { userLogged } = useContext(UserContext);
+  const userLogged_email = useContext(UserContext).userLogged.userLoggedInfo.email;
+  console.log(userLogged_email);
   const [image, setImage] = useState(null);
   const [sizeImage, setSizeImage] = useState(null);
   const [allowZoomOut, setAllowZoomOut] = useState(false);
@@ -61,11 +62,11 @@ const Avatar = () => {
   const sendPhoto = () => {
     const formData = new FormData();
     formData.append("multipartFile", image);
-    const userLoggedID = parseInt(userLogged.userInfo.user.userID);
+    const userLoggedID = parseInt(userLogged_email);
 
     if (image !== null)
       if (sizeImage < 1048576) {
-        fetch(`${URL_HEROKU}setPath/user-profile-photo`, {
+        fetch(`${URL_HEROKU}/setPath/user-profile-photo`, {
           method: "POST",
           body: formData,
         })

@@ -6,6 +6,7 @@ router.post("/register", User_Controller.Register);
 router.get("/authChecker", User_Controller.AuthChecker);
 router.post("/login", User_Controller.Login);
 router.get("/get/all-users", User_Controller.GetAllUsers);
+router.post("/setPath/user-profile-photo", User_Controller.PostSetPhotoUser);
 /* router.post("/user-profile", User_Controller.UserProfile); */
 
 module.exports = router;

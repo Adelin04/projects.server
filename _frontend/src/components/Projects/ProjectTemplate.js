@@ -26,7 +26,7 @@ const ProjectTemplate = ({
   handleCollapse,
   finishedProject_Style,
   timeLeft,
-  photoProjectOwner,
+  projectOwnerPhoto,
   projectOwner
 }) => {
   const [display, setDisplay] = useState("none");
@@ -69,11 +69,11 @@ const ProjectTemplate = ({
 
           <div className="wrapper-card-project-owner">
             <div className="card-project-owner">
-              {photoProjectOwner !== null
+              {projectOwnerPhoto !== null
                 ? <img
                     className="card-project-owner-img"
-                    src={photoProjectOwner}
-                    alt={"Project Owner Photo"}
+                    src={projectOwnerPhoto}
+                    alt={"Owner Photo"}
                   />
                 : null}
               <h3 className="card-project-owner-name">
