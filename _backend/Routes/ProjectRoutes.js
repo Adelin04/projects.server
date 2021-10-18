@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get("/get/projects", Project_Controller.Get_ProjectByUser);
 router.post("/post/newProject", Project_Controller.Post_CreateNewProject);
+router.post("/get/to/edit-project/:id", Project_Controller.Get_EditProject);
 router.post("/get/finished-project", Project_Controller.Get_FinishedProject);
 router.post("/move/finished-project/:id", Project_Controller.Post_SetFinishedProject);
 router.delete("/delete/project/:id", Project_Controller.Post_DeleteProject);

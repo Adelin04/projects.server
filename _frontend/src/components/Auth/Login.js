@@ -37,7 +37,7 @@ const Login = () => {
     setMsg(null);
 
     try {
-/*       console.log("userLogged <- ", userLogged); */
+      /*       console.log("userLogged <- ", userLogged); */
       fetch(`${URL_HEROKU}/auth/login`, {
         method: "POST",
         headers: {
@@ -60,7 +60,9 @@ const Login = () => {
             });
             dispatch_projects({
               type: FETCH_PROJECTS,
-              payload: projectsList,
+              payload: projectsList.filter(
+                (project) => project.isFinished !== true
+              ),
               isLoading_Projects: false,
             });
             localStorage.setItem("token", token);

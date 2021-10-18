@@ -22,16 +22,17 @@ const ProjectsProvider = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const { projectsList } = data;
-
-        if (data)
-          if (data.succes) {
-            dispatch_projects({
-              type: FETCH_PROJECTS,
-              payload: projectsList,
-              isLoading_Projects: false,
-            });
-          }
+        const { succes, projectsList } = data;
+        console.log("projectsList", data);
+        if (succes) {
+          dispatch_projects({
+            type: FETCH_PROJECTS,
+            payload: projectsList.filter(
+              (project) => project.isFinished !== true
+            ),
+            isLoading_Projects: false,
+          });
+        }
       })
       .catch((err) => console.log(err.toString()));
   };

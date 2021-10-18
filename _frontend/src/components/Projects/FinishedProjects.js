@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../Nav/NavBar";
 
@@ -8,7 +8,9 @@ import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 import ProjectTemplate from "./ProjectTemplate";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../Context/UserContext";
+import { ProjectsContext } from "../Context/ProjectsContext";
 import styled from "styled-components";
+import { DELETE_PROJECT } from "../Reducer/Action";
 
 const logo = <FontAwesomeIcon icon={faProjectDiagram} />;
 
@@ -21,41 +23,40 @@ const links_noSession = [
   { url: "/register", link: "SignUp" },
 ];
 
-class FinishedProjects extends React.Component {
-  static contextType = UserContext;
-  constructor(props) {
-    super(props);
-    this.state = {
-      finishedProjectsList: [],
-      isLoading: true,
-      redirect: false,
-      editID: null,
-      finishedProject_Style: { display: "none" },
-    };
-    console.log("contextType", this.context);
-  }
-  
-  componentDidMount() {
+const FinishedProjects = () => {
+  const { isAuth } = useContext(UserContext).userLogged;
+  const { projects, dispatch_projects } = useContext(ProjectsContext);
+  console.log(isAuth);
+  console.log(projects);
+
+  const [finishedProjectsList, setFinishedProjectsList] = useState([]);
+  const [isLoading, setIsLoading] = useState([true]);
+  const [redirect, isRedirect] = useState([false]);
+  const [editID, setEditID] = useState([null]);
+  const [finishedProject_Style, setFinishedProject_Style] = useState({
+    display: "none",
+  });
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token !== null || token !== undefined) {
       fetch(`${URL_HEROKU}/project/get/finished-project`, {
         method: "POST",
         headers: { authorization: token },
       })
-      .then((Response) => Response.json())
-      .then((data) => {
-        const { finishedProjectsList } = data;
-        // console.log("data.projects ->", finishedProjectsList);
-        this.setState({
-          finishedProjectsList: finishedProjectsList,
-          isLoading: false,
+        .then((Response) => Response.json())
+        .then((data) => {
+          const { finishedProjectsList } = data;
+          // console.log("data.projects ->", finishedProjectsList);
+          setFinishedProjectsList(finishedProjectsList);
+          setIsLoading(false);
         });
-      });
     }
-  }
+  }, []);
 
-  handleDelete = (event) => {
+  const handleDelete = (event) => {
     const id = Number(event.target.id);
+    console.log(id);
 
     fetch(`${URL_HEROKU}/project/delete/project/${id}`, {
       method: "DELETE",
@@ -63,94 +64,83 @@ class FinishedProjects extends React.Component {
         "Content-type": "application/json",
       },
     })
-    .then((response) => response.json())
-    .then((data) => {
-      const { succes } = data;
+      .then((response) => response.json())
+      .then((data) => {
+        const { succes } = data;
         if (succes) {
           let TMP_list = [];
-          TMP_list = this.state.finishedProjectsList.filter(
-            (project) => project.id !== id
-            );
-            this.setState({ data: TMP_list });
+          TMP_list = finishedProjectsList.filter(
+            (project) => Number(project.id) !== id
+          );
+          setFinishedProjectsList(TMP_list);
+          dispatch_projects({ type: DELETE_PROJECT, payload: TMP_list });
+          console.log("TMP_list", TMP_list);
         }
       })
       .catch((err) => console.log(err));
-    };
-    
-    render() {
-      const finishedProjectsList = this.state.finishedProjectsList;
-      const isLoading = this.state.isLoading;
-      const { isAuth } = this.context.userLogged;
-      
-      const LoadingStyle = {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        margin: "50px auto",
-        textAlign: "center",
-        fontSize: "30px",
-        color: "var(--myGreen)",
-      };
-      
-      return (
-        <Wrapper>
-        {!isAuth ? (
-          <div className="container-finishedProjects">
-            <NavBar links={links_noSession} />
-            <Link style={LoadingStyle} to={"/login"}>
-              Please LogIn
-            </Link>
-            {localStorage.clear()}
-          </div>
-        ) : (
-          <div className="container-finishedProjects">
-            <NavBar links={links} />
+  };
 
-            {isLoading ? (
-              <div style={LoadingStyle}>Loading...</div>
-            ) : (
-              <div className="wrapper-finished-projects">
-                {finishedProjectsList.length > 0 ? (
-                  <div className="finished-projects">
-                    {finishedProjectsList &&
-                      finishedProjectsList.map((project, key) => (
-                        <div style={{ width: "100%" }} key={key}>
-                          <ProjectTemplate
-                            logo={logo}
-                            projectId={project.finishedProjectID}
-                            projectName={project.projectName}
-                            projectTime={project.projectTime}
-                            projectTeam={project.projectTeam}
-                            projectDetails={project.projectDetails}
-                            projectOwner={project.projectOwner}
-                            projectOwnerPhoto={project.projectOwnerPhoto}
-                            handleDelete={this.handleDelete}
-                            timeLeft={0}
-                            finishedProject_Style={
-                              this.state.finishedProject_Style
-                            }
-                          />
-                          {console.log(
-                            "projects.projectOwnerPhoto",
-                            finishedProjectsList
-                          )}
-                        </div>
-                      ))}
-                  </div>
-                ) : (
-                  <div style={LoadingStyle}>
-                    Your finished projects list is empty!
-                  </div>
-                )}
-              </div>
-            )}
-            <Footer />
-          </div>
-        )}
-      </Wrapper>
-    );
-  }
-}
+  const LoadingStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: "50px auto",
+    fontSize: "30px",
+    color: "var(--myGreen)",
+  };
+
+  return (
+    <Wrapper>
+      {!isAuth ? (
+        <div className="container-finishedProjects">
+          <NavBar links={links_noSession} />
+          <Link style={LoadingStyle} to={"/login"}>
+            Please LogIn
+          </Link>
+        </div>
+      ) : (
+        <div className="container-finishedProjects">
+          <NavBar links={links} />
+
+          {isLoading ? (
+            <div style={LoadingStyle}>Loading...</div>
+          ) : (
+            <div className="wrapper-finished-projects">
+              {finishedProjectsList.length > 0 ? (
+                <div className="finished-projects">
+                  {finishedProjectsList &&
+                    finishedProjectsList.map((project, key) => (
+                      <div style={{ width: "100%" }} key={key}>
+                        <ProjectTemplate
+                          logo={logo}
+                          projectId={project.id}
+                          projectName={project.projectName}
+                          projectTime={project.projectTime}
+                          projectTeam={project.projectTeam}
+                          projectDetails={project.projectDetails}
+                          projectOwner={project.projectOwner}
+                          projectOwnerPhoto={project.projectOwnerPhoto}
+                          handleDelete={handleDelete}
+                          timeLeft={0}
+                          finishedProject_Style={finishedProject_Style}
+                        />
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <div style={LoadingStyle}>
+                  Your finished projects list is empty!
+                </div>
+              )}
+            </div>
+          )}
+          <Footer />
+        </div>
+      )}
+    </Wrapper>
+  );
+};
 
 export default FinishedProjects;
 

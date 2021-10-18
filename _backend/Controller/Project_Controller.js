@@ -23,7 +23,7 @@ const Get_ProjectByUser = async (req, res) => {
   res.send({ succes: true, projectsList: projectsList });
 };
 
-const Post_CreateNewProject = (req, res) => {
+const Post_CreateNewProject = async (req, res) => {
   const {
     projectName,
     projectTeam,
@@ -34,11 +34,11 @@ const Post_CreateNewProject = (req, res) => {
   } = req.body;
 
   if (req.body !== null) {
-    Projects.findOne({
+    await Projects.findOne({
       where: { projectName: projectName },
     }).then((findProject) => {
       if (!findProject) {
-        const newProject = new Projects({
+        let newProject = new Projects({
           projectName,
           projectTeam,
           projectTime,
@@ -46,12 +46,20 @@ const Post_CreateNewProject = (req, res) => {
           projectOwner,
           projectOwnerPhoto,
         });
-        console.log(newProject);
-        res.send({ succes: true });
-        return newProject.save();
+        newProject.save().then(() => {
+          return res.send({ succes: true, newProject: newProject });
+        });
       } else res.send({ succes: false });
     });
   } else res.send({ succes: false });
+};
+
+const Get_EditProject = async (req, res) => {
+  const editProject_ID = req.params.id;
+  const toEditProject = await Projects.findOne({
+    where: { id: editProject_ID },
+  });
+  return res.send({ succes: true, toEditProject: toEditProject });
 };
 
 const Get_FinishedProject = async (req, res) => {
@@ -77,11 +85,16 @@ const Get_FinishedProject = async (req, res) => {
 
 const Post_SetFinishedProject = async (req, res) => {
   const finishedProject_ID = req.params.id;
-  await Projects.update(
-    { isFinished: true },
-    { where: { id: finishedProject_ID } }
-  );
-  res.send({ succes: true });
+  try {
+    await Projects.update(
+      { isFinished: true },
+      { where: { id: finishedProject_ID } }
+    );
+    res.send({ succes: true });
+  } catch (error) {
+    res.send({ error: error.toString() });
+    console.log(error.toString());
+  }
 };
 
 const Post_DeleteProject = async (req, res) => {
@@ -97,6 +110,7 @@ const Post_DeleteProject = async (req, res) => {
 module.exports = {
   Get_ProjectByUser: Get_ProjectByUser,
   Post_CreateNewProject: Post_CreateNewProject,
+  Get_EditProject: Get_EditProject,
   Get_FinishedProject: Get_FinishedProject,
   Post_SetFinishedProject: Post_SetFinishedProject,
   Post_DeleteProject: Post_DeleteProject,

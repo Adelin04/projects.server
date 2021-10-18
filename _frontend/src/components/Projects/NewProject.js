@@ -6,7 +6,7 @@ import Button from "../_Utils/Button";
 import { URL_HEROKU } from "../_Utils/Dependency";
 import { Redirect } from "react-router-dom";
 import { ProjectsContext } from "../Context/ProjectsContext";
-import { ADD_PROJECT } from "../Reducer/Action";
+import { ADD_PROJECT, FETCH_PROJECTS } from "../Reducer/Action";
 import { UserContext } from "../Context/UserContext";
 
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,8 @@ let links = [
 /* const dateNow = new Date().getTime();
 const day = new Date().getDay();
 const month = new Date().getMonth();
-const year = new Date().getFullYear(); */
+const year = new Date().getFullYear();
+console.log(new Date().toISOString()); */
 
 const NewProject = () => {
   const { projects, dispatch_projects } = useContext(ProjectsContext);
@@ -29,7 +30,7 @@ const NewProject = () => {
   const { projectsList } = useContext(ProjectsContext).projects.projectsList;
   const { userLoggedInfo } = useContext(UserContext).userLogged;
 
-  console.log("projectsList newP", projectsList);
+  console.log("projectsList newP", projects.projectsList);
 
   const [projectName, setProjectName] = useState("");
   const [projectTime, setProjectTime] = useState("");
@@ -110,11 +111,16 @@ const NewProject = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("data", data);
-        if (data.succes) {
-          setIsSucces(data.succes);
+        const { succes, newProject } = data;
+        if (succes) {
+          setIsSucces(succes);
+          console.log("projects.projectsList", projects.projectsList);
+          console.log("newProject", newProject);
+          newProject.createdAt = new Date().toISOString();
+          newProject.updatedAt = new Date().toISOString();
           dispatch_projects({
             type: ADD_PROJECT,
-            payload: [...projects.projectsList, dataNewProject],
+            payload: [...projects.projectsList, newProject],
           });
         } else {
           setIsSucces(data.succes);
