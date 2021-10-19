@@ -54,8 +54,7 @@ class EditProject extends React.Component {
         return res.json();
       })
       .then((data) => {
-        /* console.log("users ->", data.users); */
-        this.setState({ usersList: data.users });
+        this.setState({ usersList: data });
       });
   };
 
@@ -64,24 +63,24 @@ class EditProject extends React.Component {
       match: { params },
     } = this.props;
 
-   /*  this.context.dispatch({
+    this.context.dispatch_projects({
       type: REMOVE_PROJECT,
       payload: [
-        ...this.context.projects.filter(
+        ...this.context.projects.projectsList.filter(
           (project) => project.id !== Number(params.id)
         ),
       ],
-    }); */
-    fetch(`${URL_HEROKU}/project/get/to/edit-project/${params.id}`)
+    });
+    fetch(`${URL_HEROKU}/project/get/edit-project/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
-        const { succes, toEditProject } = data;
+        const { succes, editProject } = data;
         if (succes)
           this.setState({
-            projectName: toEditProject.projectName,
-            projectTeam: toEditProject.projectTeam,
-            projectTime: toEditProject.projectTime,
-            projectDetails: toEditProject.projectDetails,
+            projectName: editProject.projectName,
+            projectTeam: editProject.projectTeam,
+            projectTime: editProject.projectTime,
+            projectDetails: editProject.projectDetails,
           });
       });
     this.loadUsers();
@@ -107,7 +106,7 @@ class EditProject extends React.Component {
       projectDetails: self.state.projectDetails,
     };
 
-    fetch(`${URL_HEROKU}/project/edited/project/${params.id}`, {
+    fetch(`${URL_HEROKU}/project/put/edited/project/${params.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -116,13 +115,18 @@ class EditProject extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.succes) {
-          this.context.dispatch({
+        console.log("data", data);
+        const { succes, editedProject, error } = data;
+        if (succes) {
+          this.context.dispatch_projects({
             type: EDIT_DONE,
-            payload: [...this.context.projectsList, data.updatedProject],
+            payload: [...this.context.projects.projectsList, editedProject],
           });
         }
-        console.log("data submited -> ", data);
+        if (!succes) {
+          const { error } = data;
+          console.log(error);
+        }
       })
       .catch((err) => console.log(err));
 

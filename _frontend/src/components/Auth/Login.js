@@ -100,10 +100,16 @@ const Login = () => {
 
   if (userLogged.isAuth) {
     return <Redirect to={"/dashboard"} />;
+  } else if (
+    userLogged.userLoggedInfo === null ||
+    userLogged.userLoggedInfo === undefined
+  ) {
+    localStorage.removeItem("token");
+    return <Redirect to={"/login"} />;
   } else
     return (
       <div className="login">
-        {/* {console.log(userLogged.isAuth)} */}
+        {console.log("userLogged", userLogged)}
         <NavBar links={links} />
 
         <div className="form">

@@ -12,6 +12,7 @@ const Project = sequelize.define("project", {
   projectTeam: { type: Sequelize.STRING },
   projectTime: { type: Sequelize.INTEGER },
   projectOwner: { type: Sequelize.STRING },
+  projectDetails: { type: Sequelize.STRING },
   projectOwnerPhoto: { type: Sequelize.STRING },
   isFinished: {
     type: Sequelize.BOOLEAN,

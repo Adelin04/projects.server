@@ -6,6 +6,8 @@ import {
   SET_CAPITALIZE_USER_PROFILE,
   SET_USERLOGGED_INFO,
 } from "../Reducer/Action";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 // import { useCookies } from "react-cookie";
 
 const UserContext = createContext();
@@ -13,7 +15,7 @@ const UserContext = createContext();
 const initialState = {
   isAuth: false,
   userLoggedInfo: [],
-  capitalizeUserProfile: "X X",
+  capitalizeUserProfile: "",
 };
 const UserProvider = ({ children }) => {
   const [userLogged, dispatch_user] = useReducer(User_Reducer, initialState);

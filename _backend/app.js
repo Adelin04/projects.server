@@ -9,8 +9,8 @@ const app = express();
 
 const UserRoutes = require("./Routes/UserRoutes");
 const ProjectRoutes = require("./Routes/ProjectRoutes");
+const AwsRoutes = require("./Routes/AwsRoutes");
 const sequelize = require("./Repository/DataBase");
-
 
 const port = process.env.PORT || 4000;
 
@@ -52,6 +52,7 @@ app.use(
 //Controllers
 app.use("/auth/", UserRoutes);
 app.use("/project/", ProjectRoutes);
+app.use("/aws/", AwsRoutes);
 
 // await FinishedProjects.sync({ force: true });
 sequelize.sync({

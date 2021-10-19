@@ -56,10 +56,33 @@ const Post_CreateNewProject = async (req, res) => {
 
 const Get_EditProject = async (req, res) => {
   const editProject_ID = req.params.id;
-  const toEditProject = await Projects.findOne({
+  const editProject = await Projects.findOne({
     where: { id: editProject_ID },
   });
-  return res.send({ succes: true, toEditProject: toEditProject });
+  return res.send({ succes: true, editProject: editProject });
+};
+
+const Put_EditedProject = async (req, res) => {
+  const editedProject_ID = req.params.id;
+
+  try {
+    const foundItem = await Projects.findOne({
+      where: { id: editedProject_ID },
+    });
+
+    if (foundItem) {
+      await Projects.update(req.body, {
+        where: { id: editedProject_ID },
+      });
+
+      const editedProject = await Projects.findOne({
+        where: { id: editedProject_ID },
+      });
+      return res.send({ succes: true, editedProject: editedProject });
+    }
+  } catch (error) {
+    return res.send({ succes: false, error: error.toString });
+  }
 };
 
 const Get_FinishedProject = async (req, res) => {
@@ -111,6 +134,7 @@ module.exports = {
   Get_ProjectByUser: Get_ProjectByUser,
   Post_CreateNewProject: Post_CreateNewProject,
   Get_EditProject: Get_EditProject,
+  Put_EditedProject: Put_EditedProject,
   Get_FinishedProject: Get_FinishedProject,
   Post_SetFinishedProject: Post_SetFinishedProject,
   Post_DeleteProject: Post_DeleteProject,

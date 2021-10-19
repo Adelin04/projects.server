@@ -62,12 +62,15 @@ const Avatar = () => {
     const formData = new FormData();
     formData.append("multipartFile", image);
     const userLoggedID = parseInt(userLogged_ID);
-
+    console.log(image);
     if (image !== null)
       if (sizeImage < 1048576) {
-        fetch(`${URL_HEROKU}/setPath/user-profile-photo`, {
+        fetch(`${URL_HEROKU}/aws/setPath/user-profile-photo`, {
           method: "POST",
           body: formData,
+          headers: {
+            Accept: "multipart/form-data",
+          },
         })
           .then((response) => response.json())
           .then((data) => {

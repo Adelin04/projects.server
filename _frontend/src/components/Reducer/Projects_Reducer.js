@@ -3,6 +3,7 @@ import {
   DELETE_PROJECT,
   EDIT_DONE,
   FETCH_PROJECTS,
+  FETCH_FINISHED_PROJECTS,
   DONE_PROJECTS,
   REMOVE_PROJECT,
   CHANGE_PATH_USER_IMAGE,
@@ -22,8 +23,13 @@ export const Projects_reducer = (state, action) => {
       return { ...state, projectsList: action.payload };
     case DONE_PROJECTS:
       return { ...state, projectsList: action.payload };
+    case FETCH_FINISHED_PROJECTS:
+      return {
+        ...state,
+        finishedProjectsList: action.payload,
+      };
     case DELETE_PROJECT:
-      return { ...state, projectsList: action.payload };
+      return { ...state, finishedProjectsList: action.payload };
     case REMOVE_PROJECT:
       return { ...state, projectsList: action.payload };
     case CHANGE_PATH_USER_IMAGE:
