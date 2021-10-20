@@ -60,7 +60,7 @@ const Avatar = () => {
 
   const sendPhoto = () => {
     const formData = new FormData();
-    formData.append("multipartFile", image);
+    formData.append("file", image);
     const userLoggedID = parseInt(userLogged_ID);
     console.log(image);
     if (image !== null)
@@ -84,7 +84,7 @@ const Avatar = () => {
               items.forEach((element) => {
                 console.log("items", element);
               }); */
-              dispatch({
+              /* dispatch({
                 type: CHANGE_PATH_USER_IMAGE,
                 payload: [
                   projects.projects.map((project) => {
@@ -94,7 +94,7 @@ const Avatar = () => {
                   }),
                 ],
               });
-              setRedirect(true);
+              setRedirect(true); */
             }
           })
           .catch((err) => {
