@@ -161,7 +161,7 @@ const ProjectsList = () => {
                         handleEdit={handleEdit}
                         handleDone={handleDone}
                       />
-                      {/* {console.log("projectList ->", project)} */}
+                      {console.log("projectList ->", project)}
                     </div>
                   ))}
               </div>

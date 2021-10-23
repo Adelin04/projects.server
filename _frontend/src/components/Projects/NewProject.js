@@ -97,7 +97,8 @@ const NewProject = () => {
       projectTime: projectTime,
       projectDetails: projectDetails,
       projectOwner: userLoggedInfo.email,
-      photoProjectOwner: userLoggedInfo.projectOwnerPhoto,
+      projectOwnerPhoto: userLoggedInfo.urlPhoto,
+      projectOwnerPhoto_foreignKeyUserId: userLoggedInfo.id,
     };
 
     console.log(dataNewProject);

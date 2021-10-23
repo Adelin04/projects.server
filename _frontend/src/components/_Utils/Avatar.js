@@ -10,8 +10,10 @@ import { ProjectsContext } from "../Context/ProjectsContext";
 import { UserContext } from "../Context/UserContext";
 
 const Avatar = () => {
-  const { projects, dispatch } = useContext(ProjectsContext);
+  const { projects, dispatch_projects } = useContext(ProjectsContext);
   const userLogged_ID = useContext(UserContext).userLogged.userLoggedInfo.id;
+  const userLogged_EMAIL = useContext(UserContext).userLogged.userLoggedInfo.email;
+
   const [image, setImage] = useState(null);
   const [sizeImage, setSizeImage] = useState(null);
   const [allowZoomOut, setAllowZoomOut] = useState(false);
@@ -59,57 +61,72 @@ const Avatar = () => {
   };
 
   const sendPhoto = () => {
+    const userLoggedID = parseInt(userLogged_ID);
     const formData = new FormData();
     formData.append("file", image);
-    const userLoggedID = parseInt(userLogged_ID);
-    console.log(image);
-    if (image !== null)
-      if (sizeImage < 1048576) {
-        fetch(`${URL_HEROKU}/aws/setPath/user-profile-photo`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "multipart/form-data",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.succes) {
-              /*               console.log("data set photo ->", data);
-              const items = projects.projects.map((project) => {
-                if (parseInt(project.userID_foreign) === userLoggedID)
-                  project.projectOwnerPhoto = data.finalEndpointUrl;
-                return project;
-              });
-              items.forEach((element) => {
-                console.log("items", element);
-              }); */
-              /* dispatch({
-                type: CHANGE_PATH_USER_IMAGE,
-                payload: [
-                  projects.projects.map((project) => {
-                    if (parseInt(project.userID_foreign) === userLoggedID)
-                      project.projectOwnerPhoto = data.finalEndpointUrl;
-                    return project;
-                  }),
-                ],
-              });
-              setRedirect(true); */
-            }
+    formData.append("userLoggedID", userLoggedID);
+    formData.append("userLogged_EMAIL", userLogged_EMAIL);
+    console.log(userLoggedID);
+    try {
+      if (image !== null)
+        if (sizeImage < 1048576) {
+          fetch(`${URL_HEROKU}/aws/setPath/user-profile-photo`, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "multipart/form-data",
+            },
           })
-          .catch((err) => {
-            console.log(err);
-            setDynamicMsg(err.toString());
-          });
-      } else {
-        setDynamicMsg("The file is too large");
-      }
+            .then((response) => response.json())
+            .then((data) => {
+              const { succes, urlPhoto, msg } = data;
+              console.log("data avatar", data);
+              if (succes) {
+                setDynamicMsg(msg.split(".")[0]);
+                /* console.log("data set photo ->", data);
+                const items = projects.projects.map((project) => {
+                  if (parseInt(project.userID_foreign) === userLoggedID)
+                    project.projectOwnerPhoto = data.finalEndpointUrl;
+                  return project;
+                });
+                items.forEach((element) => {
+                  console.log("items", element);
+                }) */
+                dispatch_projects({
+                  type: CHANGE_PATH_USER_IMAGE,
+                  payload: [
+                    projects.projectsList.map((project) => {
+                      if (
+                        parseInt(project.projectOwnerPhoto_foreignKeyUserId) ===
+                        userLoggedID
+                      )
+                        project.projectOwnerPhoto = urlPhoto;
+                      return project;
+                    }),
+                  ],
+                });
+                setRedirect(succes);
+              } else {
+                setRedirect(succes);
+                setDynamicMsg(msg);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setDynamicMsg(err.toString());
+            });
+        } else {
+          setDynamicMsg("The file is too large");
+        }
+    } catch (error) {
+      setDynamicMsg(error.toString());
+    }
   };
 
   return (
     <div className="container-img">
-      {redirect ? <Redirect to={"/dashboard"} /> : null}
       {<div style={dynamicStyle}>{dynamicMsg}</div>}
+      {redirect ? <Redirect to={"/dashboard"} /> : null}
       <div style={{ position: "relative" }} className="wrapper-img">
         {/*           <div
             style={{

@@ -31,6 +31,7 @@ const Post_CreateNewProject = async (req, res) => {
     projectDetails,
     projectOwner,
     projectOwnerPhoto,
+    projectOwnerPhoto_foreignKeyUserId,
   } = req.body;
 
   if (req.body !== null) {
@@ -45,6 +46,7 @@ const Post_CreateNewProject = async (req, res) => {
           projectDetails,
           projectOwner,
           projectOwnerPhoto,
+          projectOwnerPhoto_foreignKeyUserId,
         });
         newProject.save().then(() => {
           return res.send({ succes: true, newProject: newProject });

@@ -14,6 +14,7 @@ const Project = sequelize.define("project", {
   projectOwner: { type: Sequelize.STRING },
   projectDetails: { type: Sequelize.STRING },
   projectOwnerPhoto: { type: Sequelize.STRING },
+  projectOwnerPhoto_foreignKeyUserId: { type: Sequelize.STRING },
   isFinished: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
