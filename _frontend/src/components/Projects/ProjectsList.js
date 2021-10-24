@@ -7,9 +7,10 @@ import { ProjectsContext } from "../Context/ProjectsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 import ProjectTemplate from "./ProjectTemplate";
-import { DELETE_PROJECT, DONE_PROJECTS } from "../Reducer/Action";
+import { DELETE_PROJECT, DONE_PROJECTS, ERROR } from "../Reducer/Action";
 import { UserContext } from "../Context/UserContext";
 import styled from "styled-components";
+import { SetError } from "../_Utils/Error";
 
 const logo = <FontAwesomeIcon icon={faProjectDiagram} />;
 
@@ -34,11 +35,12 @@ const links_noSession = [
 const ProjectsList = () => {
   const { projects, dispatch_projects } = useContext(ProjectsContext);
   const { isLoading_Projects } = useContext(ProjectsContext).projects;
-  // const  projects.projectsList  = useContext(ProjectsContext).projects.projectsList;
   const { isAuth } = useContext(UserContext).userLogged;
-
-  /*   console.log("isLoading_Projects", isLoading_Projects);
-  console.log("projectsList", projects.projectsList); */
+  const [redirect, setRedirect] = useState(false);
+  const [editID, setEditID] = useState(null);
+  const [redirectTo, setRedirectTo] = useState("");
+  const [dynamicMsg, setDynamicMsg] = useState(null);
+  const [error_project_Id, setError_project_Id] = useState(null);
 
   const LoadingStyle = {
     display: "block",
@@ -47,10 +49,6 @@ const ProjectsList = () => {
     fontSize: "30px",
     color: "var(--myGreen)",
   };
-
-  const [redirect, setRedirect] = useState(false);
-  const [editID, setEditID] = useState(null);
-  const [redirectTo, setRedirectTo] = useState("");
 
   //----------Redirect methods
   const setRedir = (redirectTo) => {
@@ -75,8 +73,20 @@ const ProjectsList = () => {
   const handleEdit = (e) => {
     const id = Number(e.target.id);
     console.log("id", e.target);
-    setEditID(id);
-    setRedir(history.getProject);
+    try {
+      setEditID(id);
+      setRedir(history.getProject);
+    } catch (error) {
+      const newError = error.toString().split(':')[1];
+      if (error)
+        SetError(
+          projects.projectsList,
+          id,
+          setDynamicMsg,
+          setError_project_Id,
+          newError
+        );
+    }
   };
 
   //---------btn-Done
@@ -108,12 +118,23 @@ const ProjectsList = () => {
           dispatch_projects({ type: DONE_PROJECTS, payload: TMP_list });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        const newError = error.toString().split(':')[1];
+        if (error)
+          SetError(
+            projects.projectsList,
+            id,
+            setDynamicMsg,
+            setError_project_Id,
+            newError
+          );
+      });
   };
 
   //---------btn-Delete
   const handleDelete = async (event) => {
     const id = Number(event.target.id);
+    let TMP_list = [];
 
     await fetch(`${URL_HEROKU}/project/delete/project/${id}`, {
       method: "DELETE",
@@ -122,14 +143,29 @@ const ProjectsList = () => {
       .then((data) => {
         const { succes } = data;
         if (succes) {
-          let TMP_list = [];
           TMP_list = projects.projectsList.filter(
             (project) => Number(project.id) !== id
           );
           dispatch_projects({ type: DELETE_PROJECT, payload: TMP_list });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        const newError = error.toString().split(':')[1];
+        if (error)
+          SetError(
+            projects.projectsList,
+            id,
+            setDynamicMsg,
+            setError_project_Id,
+            newError
+          );
+        // projects.projectsList.map((project) => {
+        //   if (Number(project.id) === id) {
+        //     setDynamicMsg(error.toString());
+        //     setError_project_Id(id);
+        //   }
+        // });
+      });
   };
 
   if (isAuth) {
@@ -144,6 +180,9 @@ const ProjectsList = () => {
                   projects.projectsList.map((project, key) => (
                     <div style={{ width: "100%" }} key={key}>
                       <ProjectTemplate
+                        dynamicMsg={
+                          error_project_Id === project.id ? dynamicMsg : null
+                        }
                         logo={logo}
                         projectId={project.id}
                         projectName={project.projectName}
@@ -161,7 +200,7 @@ const ProjectsList = () => {
                         handleEdit={handleEdit}
                         handleDone={handleDone}
                       />
-                      {console.log("projectList ->", project)}
+                      {console.log("projectList ->", projects)}
                     </div>
                   ))}
               </div>

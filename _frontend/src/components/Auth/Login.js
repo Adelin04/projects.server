@@ -36,49 +36,46 @@ const Login = () => {
     setBtnMsg("Loading...");
     setMsg(null);
 
-    try {
-      /*       console.log("userLogged <- ", userLogged); */
-      fetch(`${URL_HEROKU}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+    fetch(`${URL_HEROKU}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data", data);
+        const { succes, token, userProfile, capitalizeUser, projectsList } =
+          data;
+        console.log("data.projectsList -> ", projectsList);
+        if (succes) {
+          dispatch_user({ type: SET_AUTH, payload: data.succes });
+          dispatch_user({ type: SET_USERLOGGED_INFO, payload: userProfile });
+          dispatch_user({
+            type: SET_CAPITALIZE_USER_PROFILE,
+            payload: capitalizeUser,
+          });
+          dispatch_projects({
+            type: FETCH_PROJECTS,
+            payload: projectsList.filter(
+              (project) => project.isFinished !== true
+            ),
+            isLoading_Projects: false,
+          });
+          localStorage.setItem("token", token);
+        } else {
+          setMsg("User or Password is incorect");
+          setBtnMsg("LogIn");
+        }
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("data", data);
-          const { succes, token, userProfile, capitalizeUser, projectsList } =
-            data;
-          console.log("data.projectsList -> ", projectsList);
-          if (succes) {
-            dispatch_user({ type: SET_AUTH, payload: data.succes });
-            dispatch_user({ type: SET_USERLOGGED_INFO, payload: userProfile });
-            dispatch_user({
-              type: SET_CAPITALIZE_USER_PROFILE,
-              payload: capitalizeUser,
-            });
-            dispatch_projects({
-              type: FETCH_PROJECTS,
-              payload: projectsList.filter(
-                (project) => project.isFinished !== true
-              ),
-              isLoading_Projects: false,
-            });
-            localStorage.setItem("token", token);
-          } else {
-            setMsg("User or Password is incorect");
-            setBtnMsg("LogIn");
-          }
-        });
-    } catch (err) {
-      console.error(err.toString());
-      setMsg(err.toString());
-    } finally {
-      setBtnMsg("LogIn");
-      setEmail("");
-      setPassword("");
-    }
+      .catch((error) => {
+        const newError = error.toString().split(":")[1];
+        setMsg(newError);
+        setBtnMsg("LogIn");
+        setEmail("");
+        setPassword("");
+      });
   };
 
   const dynamicStyle = {
@@ -109,7 +106,6 @@ const Login = () => {
   } else
     return (
       <div className="login">
-        {console.log("userLogged", userLogged)}
         <NavBar links={links} />
 
         <div className="form">

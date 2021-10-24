@@ -27,7 +27,8 @@ const ProjectTemplate = ({
   finishedProject_Style,
   timeLeft,
   projectOwnerPhoto,
-  projectOwner
+  projectOwner,
+  dynamicMsg
 }) => {
   const [display, setDisplay] = useState("none");
   const [iconCollapse, setIconCollapse] = useState(collaps_down);
@@ -53,8 +54,18 @@ const ProjectTemplate = ({
     display: display
   };
 
+  const dynamicStyle = {
+    margin: "0px auto 10px ",
+    width: "auto",
+    textAlign: "center",
+    fontWeight: "bolder",
+    fontSize: "20px",
+    color: "salmon",
+  };
+
   return (
     <div className="card-project">
+      {<div style={dynamicStyle}>{dynamicMsg}</div>}
       <div className="wrapper-titleProject-btnProject">
         
         <div className="info-card-project">

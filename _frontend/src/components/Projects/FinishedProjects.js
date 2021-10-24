@@ -11,6 +11,7 @@ import { UserContext } from "../Context/UserContext";
 import { ProjectsContext } from "../Context/ProjectsContext";
 import styled from "styled-components";
 import { DELETE_PROJECT } from "../Reducer/Action";
+import { SetError } from "../_Utils/Error";
 
 const logo = <FontAwesomeIcon icon={faProjectDiagram} />;
 
@@ -36,6 +37,8 @@ const FinishedProjects = () => {
   const [finishedProject_Style, setFinishedProject_Style] = useState({
     display: "none",
   });
+  const [dynamicMsg, setDynamicMsg] = useState(null);
+  const [error_project_Id, setError_project_Id] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -50,6 +53,10 @@ const FinishedProjects = () => {
           // console.log("data.projects ->", finishedProjectsList);
           setFinishedProjectsList(finishedProjectsList);
           setIsLoading(false);
+        })
+        .catch((error) => {
+          const newError = error.toString().split(':')[1];
+          setDynamicMsg(newError);
         });
     }
   }, []);
@@ -77,7 +84,17 @@ const FinishedProjects = () => {
           console.log("TMP_list", TMP_list);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        const newError = error.toString().split(':')[1];
+        if (error)
+          SetError(
+            finishedProjectsList,
+            id,
+            setDynamicMsg,
+            setError_project_Id,
+            newError
+          );
+      });
   };
 
   const LoadingStyle = {
@@ -96,7 +113,7 @@ const FinishedProjects = () => {
         <div className="container-finishedProjects">
           <NavBar links={links_noSession} />
           <Link style={LoadingStyle} to={"/login"}>
-            Please LogIn
+            {dynamicMsg}
           </Link>
         </div>
       ) : (
@@ -113,6 +130,9 @@ const FinishedProjects = () => {
                     finishedProjectsList.map((project, key) => (
                       <div style={{ width: "100%" }} key={key}>
                         <ProjectTemplate
+                          dynamicMsg={
+                            error_project_Id === project.id ? dynamicMsg : null
+                          }
                           logo={logo}
                           projectId={project.id}
                           projectName={project.projectName}

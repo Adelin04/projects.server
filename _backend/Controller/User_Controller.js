@@ -25,9 +25,13 @@ const Register = async (req, res) => {
           password: hashPassword,
         });
         // req.session.user = newUser.id;
+        res.send({ succes: true });
         return newUser.save();
+      })
+      .catch((error) => {
+        // const newError = error.toString().split(":")[1];
+        res.send({ succes: false });
       });
-    res.send({ succes: true });
   } else res.send({ succes: false });
   // res.send({ succes: true });
 };
@@ -55,7 +59,6 @@ const Login = async (req, res) => {
           },
         },
       });
-      console.log("projectsList", projectsList);
       return res.send({
         succes: true,
         token: token,
@@ -76,7 +79,6 @@ const UserProfile = (User) => {
     role: User.role,
     urlPhoto: User.urlPhoto,
   };
-  // console.log("profile", profile);
   return profile;
 };
 
@@ -85,15 +87,16 @@ const AuthChecker = async (req, res) => {
 
   try {
     const verified = jwt.verify(token, process.env.secretKey);
-    // console.log("verified", verified);
+
     if (!verified) return res.send({ succes: false });
     const user = await User.findOne({
       where: {
         email: verified.email,
       },
-    }); /* await User.findOne({ id: verified.id }); */
+    });
+
     let capitalizeUser = `${user.firstName[0]} ${user.lastName[0]}`;
-    // console.log("user -> checker", user);
+
     if (!user) return res.send({ succes: false });
     return res.send({
       succes: true,
@@ -119,8 +122,8 @@ const GetAllUsers = async (req, res) => {
   res.status(200).send(listUsers_String);
 };
 
-const PostSetPhotoUser = async (req,res) => {
-console.log(req.body);
+const PostSetPhotoUser = async (req, res) => {
+  console.log(req.body);
 };
 
 module.exports = {
@@ -128,44 +131,5 @@ module.exports = {
   Login: Login,
   AuthChecker: AuthChecker,
   GetAllUsers: GetAllUsers,
-  PostSetPhotoUser:PostSetPhotoUser
-  /* UserProfile: UserProfile, */
+  PostSetPhotoUser: PostSetPhotoUser,
 };
-
-// const GetLogin = (req, res) => {
-//   if (req.session) {
-//     console.log("session.user", req.session);
-//     console.log("session.cookie", req.cookies);
-//     return res.send({/*  session: req.session.user, */ succes: true });
-//   } else {
-//     return res.send(null);
-//   }
-// };
-
-//https://codeforgeek.com/manage-session-using-node-js-express-4/
-
-// req.session.isLoggedIn = true;
-//     req.session.user = candidat;
-//     return req.session.save();
-
-/*
-const USER_LOGGED = {};
-const AllUsers = [];
-
- const NewSession = (req, res) => {
-  session.Store.email = req.body.email;
-  AllUsers.push(session.Store.email);
-}; */
-
-/*
-      USER_LOGGED["firstName"] = existUser.firstName;
-      USER_LOGGED["lastName"] = existUser.lastName;
-      USER_LOGGED["role"] = existUser.role;
-      USER_LOGGED["urlPhoto"] = existUser.urlPhoto;
-      USER_LOGGED["email"] = existUser.email;
-      NewSession(req, res);
-      console.log("USER_LOGGED", session.Store);
-      console.log("All_USER_LOGGED", AllUsers);
-      */
-
-//https://levelup.gitconnected.com/authentication-using-jwt-in-mern-1cc5c8ccd03c

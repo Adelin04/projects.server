@@ -9,6 +9,7 @@ const ProjectsContext = React.createContext();
 const initialState = {
   projectsList: [],
   finishedProjectsList: [],
+  error_Project: null,
   isLoading_Projects: true,
 };
 const ProjectsProvider = ({ children }) => {
@@ -16,7 +17,7 @@ const ProjectsProvider = ({ children }) => {
     Projects_reducer,
     initialState
   );
-  
+
   const fetchProjects = async (token) => {
     await fetch(`${URL_HEROKU}/project/get/projects`, {
       headers: { authorization: token },

@@ -12,6 +12,14 @@ const handleLogOut = async () => {
 const PopUp_UserProfile = ({ visibility, setVisibility }) => {
   const { capitalizeUser, isAuth } = useContext(UserContext).userLogged;
   const { role } = useContext(UserContext).userLogged.userLoggedInfo;
+  let roles = [];
+
+  if (role !== null) {
+    const TMP_roles = role.split(",");
+    TMP_roles.forEach((element) => {
+      roles.push(element.split("_")[1] + "/");
+    });
+  }
 
   if (isAuth) {
     return (
@@ -20,6 +28,7 @@ const PopUp_UserProfile = ({ visibility, setVisibility }) => {
         onMouseEnter={() => setVisibility("visible")}
         onMouseLeave={() => setVisibility("hidden")}
       >
+        {console.log(roles)}
         {isAuth ? (
           <div
             style={{ visibility: `${visibility}` }}
@@ -27,8 +36,11 @@ const PopUp_UserProfile = ({ visibility, setVisibility }) => {
           >
             <div className="popUp-userName">{capitalizeUser}</div>
 
-            <div className="popUp-role">{`${role}`}</div>
-
+            <div style={{ textDecoration: "none" }} className="popUp-role">
+              <div style={{ fontSize: "15px" }}> Role</div>
+              <p className="popUp-role">{`${roles}`}</p>
+            </div>
+            <hr style={{background:'black'}} />
             <div className="wrapper-popUp-setting-popUp-logout">
               <div className="popUp-setting-btn">
                 <Link style={{ textDecoration: "none" }} to="/user-profile">

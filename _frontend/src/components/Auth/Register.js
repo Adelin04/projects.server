@@ -5,6 +5,7 @@ import NavBar from "../Nav/NavBar";
 import Button from "../_Utils/Button";
 import Footer from "../Footer/Footer";
 import { URL_HEROKU } from "../_Utils/Dependency";
+import { Redirect } from "react-router";
 
 const links = [
   { url: "/", link: "Home" },
@@ -24,6 +25,7 @@ class Register extends React.Component {
       confirmPassword: "",
       msg: "",
       btnMsg: "Sign up",
+      isSucces: false,
     };
   }
 
@@ -53,38 +55,43 @@ class Register extends React.Component {
 
     self.setState({ btnMsg: "Loading...", msg: null });
 
-    try {
-      if (self.state.password === self.state.confirmPassword) {
-        fetch(`${URL_HEROKU}/auth/register`, {
-          headers: { "Content-Type": " application/json" },
-          method: "POST",
-          body: JSON.stringify(dataUser),
+    if (self.state.password === self.state.confirmPassword) {
+      fetch(`${URL_HEROKU}/auth/register`, {
+        headers: { "Content-Type": " application/json" },
+        method: "POST",
+        body: JSON.stringify(dataUser),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const { succes } = data;
+          if (succes) {
+            self.setState({ btnMsg: "Sing up" });
+            self.setState({ isSucces: true });
+          } else
+            self.setState({
+              msg: "The password is diferent to confirm password",
+            });
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            const { succes } = data;
-            if (data.succes === true) self.setState({ btnMsg: "Sing up" });
-          })
-          .catch((err) => {
-            console.log(err);
-            self.setState({ msg: err.toString() });
-          });
-      } else
-        self.setState({ msg: "The password is diferent to confirm password" });
-    } catch (err) {
-      console.error(err.toString());
-      self.setState({ msg: err.toString(), btnMsg: "Sing up" });
-    } finally {
-      self.setState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        btnMsg: "Sign up",
-      });
-    }
+        .catch((err) => {
+          console.log(err);
+          self.setState({ msg: err.toString() });
+        })
+        .catch((error) => {
+          const newError = error.toString().split(":")[1];
+          self.setState({ msg: newError, btnMsg: "Sing up" });
+        });
+    } else
+      self.setState({ msg: "The password is diferent to confirm password" });
+
+    self.setState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      btnMsg: "Sign up",
+    });
   };
 
   render() {
@@ -98,11 +105,11 @@ class Register extends React.Component {
     };
 
     let dynamicMsg = this.state.msg;
-
+    const isSucces = this.state.isSucces;
     return (
       <div className="register">
         <NavBar links={links} />
-
+        {isSucces ? <Redirect to={"/login"} /> : null}
         <div className="form">
           {dynamicMsg && <div style={dynamicStyle}>{dynamicMsg}</div>}
           <form className="form-content" onSubmit={this.handleSubmit}>

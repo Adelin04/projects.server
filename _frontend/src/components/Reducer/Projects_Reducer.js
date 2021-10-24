@@ -7,6 +7,7 @@ import {
   DONE_PROJECTS,
   REMOVE_PROJECT,
   CHANGE_PATH_USER_IMAGE,
+  ERROR,
 } from "../Reducer/Action";
 
 export const Projects_reducer = (state, action) => {
@@ -29,7 +30,7 @@ export const Projects_reducer = (state, action) => {
         finishedProjectsList: action.payload,
       };
     case DELETE_PROJECT:
-      return { ...state, finishedProjectsList: action.payload };
+      return { ...state, projectsList: action.payload };
     case REMOVE_PROJECT:
       return { ...state, projectsList: action.payload };
     case CHANGE_PATH_USER_IMAGE:
