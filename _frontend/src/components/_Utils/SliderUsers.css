@@ -1,0 +1,33 @@
+.slider-users {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  top: 150px;
+  right: 0px;
+  width: 200px;
+  height: auto;
+  max-height: 420px;
+  background-color: var(--myGreen) /* #7fce8a34 */;
+  border-radius: 15px;
+  overflow: auto;
+  transition: all 500ms;
+}
+
+.slider-users.active {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  top: 150px;
+  right: 0px;
+  width: 0px;
+  height: auto;
+  max-height: 420px;
+  background-color: var(--myGreen);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 1s;
+}

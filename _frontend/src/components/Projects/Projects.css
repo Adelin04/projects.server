@@ -10,7 +10,7 @@ textarea {
   max-width: 300px;
   height: 35px;
   min-height: 25px;
-  border: 1px solid #1ba12d;
+  border: 1px solid var(--myGreen);
   border-radius: 10px;
   padding: 10px;
   text-align: center;
@@ -25,7 +25,7 @@ textarea {
   min-width: 50px;
   text-align: center;
   margin-left: 85%;
-  color: #1ba12d;
+  color: var(--myGreen);
   font-size: 30px;
   z-index: 5;
   cursor: pointer;
@@ -184,7 +184,7 @@ li {
 .label-info-card-project-projectTime,
 .label-info-card-project-projectDetails {
   margin: 0px;
-  color: #1ba12d;
+  color: var(--myGreen);
   width: auto;
   padding-right: 20px;
 }
@@ -246,7 +246,7 @@ li {
 
 .info-card-project-logo {
   margin-right: 5px;
-  color: #1ba12d;
+  color: var(--myGreen);
 }
 
 .btn-card-project {
@@ -268,7 +268,7 @@ li {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  color: #1ba12d;
+  color: var(--myGreen);
   background-color: transparent;
   outline: none;
 }
@@ -277,11 +277,11 @@ li {
 .btn-card-project-arhiva:hover,
 .btn-card-project-edit:hover,
 .btn-card-project-done:hover {
-  border: 1px solid #1ba12d;
+  border: 1px solid var(--myGreen);
 }
 
 .btn-card-project-del:hover {
-  border: 1px solid #1ba12d;
+  border: 1px solid var(--myGreen);
   color: red;
 }
 
@@ -304,7 +304,7 @@ li {
   font-size: 20px;
   text-align: center;
   background-color: transparent;
-  color: #1ba12d;
+  color: var(--myGreen);
   cursor: pointer;
   border: none;
   outline: none;
@@ -326,7 +326,7 @@ li {
   border-radius: 20px;
   border: none;
   color: white;
-  background-color: #1ba12d;
+  background-color: var(--myGreen);
 }
 
 /*FinishedProjects*/
@@ -340,7 +340,7 @@ li {
   width: 100%;
 }
 
-.container-finishedProjects{
+.container-finishedProjects {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -11,6 +11,7 @@ import { UserContext } from "../Context/UserContext";
 
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SliderUsers from "../_Utils/SliderUsers";
 
 let links = [
   { url: "/", link: "Home" },
@@ -42,6 +43,7 @@ const NewProject = () => {
   const [isVisibility, setVisibility] = useState("hidden");
   const [button, setButton] = useState("Create Project");
   const [dynamicMsg, setDynamicMsg] = useState("");
+  const [isActiv, setIsActiv] = useState(null);
 
   const dynamicStyle = {
     margin: "0px auto 10px ",
@@ -81,10 +83,8 @@ const NewProject = () => {
 
   const handleGetUsers = (e) => {
     e.preventDefault();
-
-    isVisibility === "hidden"
-      ? setVisibility("visible")
-      : setVisibility("hidden");
+    if (isActiv === "active") setIsActiv(null);
+    else setIsActiv("active");
   };
 
   const handleSubmit = (event) => {
@@ -145,7 +145,7 @@ const NewProject = () => {
 
   userList.forEach((element, id) => {
     listUsers.push(
-      <li key={id}>
+      <li key={id} style={{ minWidth: "190px" }}>
         <input
           className="input-listUsers"
           type="checkbox"
@@ -165,16 +165,11 @@ const NewProject = () => {
         <Redirect to={"/dashboard"} />
       ) : (
         <div>
+          <SliderUsers isActiv={isActiv} usersList={listUsers} />
+
           <NavBar links={links} />
 
           <div className="wrapper-form">
-            <ul
-              style={{ visibility: isVisibility }}
-              className="userListStyle-ul"
-            >
-              {listUsers}
-            </ul>
-
             <form
               className="form-content"
               method="POST"
