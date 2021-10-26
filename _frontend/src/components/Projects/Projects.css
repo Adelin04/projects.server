@@ -164,6 +164,18 @@ li {
   padding: 0px 0px 0px 5px;
 }
 
+.projectDetails {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  inline-size: 150px;
+  overflow-wrap: break-word;
+  margin: auto;
+  width: auto;
+  height: auto;
+}
+
 .wrapper-info-card-project-projectTeam-projectTime-projectDetails {
   display: flex;
   flex-direction: column;
@@ -372,6 +384,7 @@ li {
 
 @media only screen and (max-width: 750px) {
   /*New Project*/
+
   .wrapper-form {
     position: relative;
     display: flex;
@@ -435,24 +448,13 @@ li {
     margin: 5px;
     padding: 5px;
   }
+
   .info-card-project-projectTime {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
   }
-  /*   .wrapper700px {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-  } */
-  /*   .container-timeLeft {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-} */
 
   .info-card-project-logo {
     margin: 0px 10px 0px 0px;

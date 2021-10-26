@@ -159,13 +159,15 @@ const ProjectTemplate = ({
             <div className="remainingTime">
               {" "}
               <p className="timeline" style={styleBar} />
-              <p className='days-reining'>
+              <p className="days-reining">
                 {" "}
-                {remainingTime && remainingTime <= 0
-                  ? <p className='time-expired'>Time Expired</p>
-                  : `${remainingTime.toString()} ${
-                      remainingTime > 1 ? "days" : "day"
-                    }`}
+                {remainingTime && remainingTime <= 0 ? (
+                  <p className="time-expired">Time Expired</p>
+                ) : (
+                  `${remainingTime.toString()} ${
+                    remainingTime > 1 ? "days" : "day"
+                  }`
+                )}
               </p>
             </div>
             {/*  </div> */}
@@ -189,9 +191,7 @@ const ProjectTemplate = ({
               Details{" "}
             </label>
           </div>
-          <div className="projectDetails">
-            <p>{projectDetails}</p>
-          </div>
+          <div className="projectDetails">{projectDetails}</div>
         </div>
       </div>
     </div>
