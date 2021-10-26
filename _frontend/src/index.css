@@ -19,7 +19,7 @@ body {
       rgb(242, 211, 145) 100%
     )
     fixed;
-    z-index: -10000;
+  z-index: -10000;
 }
 
 #root {
@@ -31,4 +31,32 @@ body {
 
 :root {
   --myGreen: #00c479;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(0, 0, 0);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--myGreen);
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:  rgba(48, 141, 57, 0.693);
+}
+
+::-webkit-scrollbar-button {
+  height: 130px;
 }

@@ -39,11 +39,10 @@ const NewProject = () => {
   const [projectTeam, setProjectTeam] = useState([]);
   const [userList, setUserList] = useState([]);
   const [isSucces, setIsSucces] = useState(false);
-  const [isReady, setIsReady] = useState(false);
   const [isVisibility, setVisibility] = useState("hidden");
   const [button, setButton] = useState("Create Project");
   const [dynamicMsg, setDynamicMsg] = useState("");
-  const [isActiv, setIsActiv] = useState(null);
+  const [isActiv, setIsActiv] = useState('active');
 
   const dynamicStyle = {
     margin: "0px auto 10px ",
@@ -83,8 +82,10 @@ const NewProject = () => {
 
   const handleGetUsers = (e) => {
     e.preventDefault();
-    if (isActiv === "active") setIsActiv(null);
-    else setIsActiv("active");
+
+    if (isActiv === "active") {
+      setIsActiv(null);
+    } else if (isActiv === null) setIsActiv("active");
   };
 
   const handleSubmit = (event) => {

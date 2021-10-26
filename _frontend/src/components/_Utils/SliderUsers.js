@@ -4,7 +4,13 @@ import React from "react";
 import "./SliderUsers.css";
 
 const SliderUsers = ({ isActiv, usersList }) => {
-  return <div className={"slider-users " + `${isActiv}`}>{usersList}</div>;
+  return (
+    <div className={`slider-users ${isActiv}`}>
+      {usersList}
+      {usersList}
+      {usersList}
+    </div>
+  );
 };
 
 export default SliderUsers;

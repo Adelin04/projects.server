@@ -9,9 +9,10 @@
   width: 200px;
   height: auto;
   max-height: 420px;
-  background-color: var(--myGreen) /* #7fce8a34 */;
+  background-color: var(--myGreen);
   border-radius: 15px;
   overflow: auto;
+  z-index: 2;
   transition: all 500ms;
 }
 

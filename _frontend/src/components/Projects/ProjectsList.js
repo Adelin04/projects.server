@@ -159,12 +159,6 @@ const ProjectsList = () => {
             setError_project_Id,
             newError
           );
-        // projects.projectsList.map((project) => {
-        //   if (Number(project.id) === id) {
-        //     setDynamicMsg(error.toString());
-        //     setError_project_Id(id);
-        //   }
-        // });
       });
   };
 
@@ -200,7 +194,6 @@ const ProjectsList = () => {
                         handleEdit={handleEdit}
                         handleDone={handleDone}
                       />
-                      {console.log("projectList ->", projects)}
                     </div>
                   ))}
               </div>
