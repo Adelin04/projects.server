@@ -154,8 +154,6 @@ const ProjectTemplate = ({
           </div>
 
           <div className="container-timeLeft" style={finishedProject_Style}>
-            {/* <div className="wrapper-timeline"> */}
-
             <div className="remainingTime">
               {" "}
               <p className="timeline" style={styleBar} />
@@ -170,17 +168,14 @@ const ProjectTemplate = ({
                 )}
               </p>
             </div>
-            {/*  </div> */}
-            {/* </div> */}
-          </div>
 
-          <div className="wrapper-projectTime">
-            <p className="projecTime">{`${projectTime}  ${
-              projectTime > 1 ? "days" : "day"
-            }`}</p>
+            <div className="wrapper-projectTime">
+              <p className="projecTime">{`${projectTime}  ${
+                projectTime > 1 ? "days" : "day"
+              }`}</p>
+            </div>
           </div>
         </div>
-
         <div
           style={styleCollapseBtn}
           className="info-card-project-projectDetails"
@@ -191,7 +186,7 @@ const ProjectTemplate = ({
               Details{" "}
             </label>
           </div>
-          <div className="projectDetails">{projectDetails}</div>
+          <p className="projectDetails">{projectDetails}</p>
         </div>
       </div>
     </div>

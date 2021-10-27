@@ -210,7 +210,7 @@ const NewProject = () => {
               />
 
               <textarea
-                className="user-list"
+                className="area-user-list"
                 onChange={handleChangeAddUser}
                 value={projectTeam}
                 required
