@@ -178,12 +178,28 @@ li {
   padding: 0px 0px 0px 5px;
 }
 
+/**********************************************************/
+.container-details {
+  box-sizing: border-box;
+  padding: 30 px;
+  border: 5 px solid blue;
+  border: 1px solid var(--myGreen);
+  border-radius: 10px;
+}
+.flex-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+/**********************************************************/
+
 .projectDetails {
   display: block;
-  margin:  auto;
+  margin: auto;
   width: 80%;
-  height:100px;
-  line-height:100px;
+  height: 100px;
+  line-height: 100px;
   border: 1px solid var(--myGreen);
   border-radius: 10px;
   padding: 10px;
@@ -221,12 +237,6 @@ li {
 .wrapper-label-info-card-project-projectTime,
 .wrapper-label-info-card-project-projectDetails {
   text-align: left;
-}
-
-.projectTeam,
-.projectTime,
-.projectDetails {
-  display: flex;
 }
 
 .projectTime {
@@ -464,8 +474,6 @@ li {
     padding: 5px;
   }
 
-
-
   .projectTeam {
     margin: auto;
   }
@@ -544,5 +552,11 @@ li {
     justify-content: center;
     margin: auto;
     width: 150px;
+  }
+
+  .card-project-owner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

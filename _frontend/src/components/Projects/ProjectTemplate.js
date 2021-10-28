@@ -176,7 +176,9 @@ const ProjectTemplate = ({
             </div>
           </div>
         </div>
-        <div
+
+        <div className="container-details"><p className='flex-details'>{projectDetails}</p></div>
+        {/*         <div
           style={styleCollapseBtn}
           className="info-card-project-projectDetails"
         >
@@ -187,7 +189,7 @@ const ProjectTemplate = ({
             </label>
           </div>
           <p className="projectDetails">{projectDetails}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
