@@ -7,8 +7,6 @@ const SliderUsers = ({ isActiv, usersList }) => {
   return (
     <div className={`slider-users ${isActiv}`}>
       {usersList}
-      {usersList}
-      {usersList}
     </div>
   );
 };
