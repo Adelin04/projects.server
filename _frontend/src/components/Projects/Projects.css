@@ -178,39 +178,33 @@ li {
   padding: 0px 0px 0px 5px;
 }
 
-/**********************************************************/
-.container-details {
-  box-sizing: border-box;
-  padding: 30 px;
-  border: 5 px solid blue;
-  border: 1px solid var(--myGreen);
-  border-radius: 10px;
-}
-.flex-details {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-}
-/**********************************************************/
-
-.projectDetails {
+.projectDetails,
+.projectTeam {
   display: block;
   margin: auto;
   width: 80%;
   height: 100px;
-  line-height: 100px;
   border: 1px solid var(--myGreen);
   border-radius: 10px;
   padding: 10px;
   text-align: center;
   outline: none;
   overflow: auto;
+  overflow-wrap: anywhere;
 }
 
 .wrapper-info-card-project-projectTeam-projectTime-projectDetails {
+  flex-direction: column;
+  height: 400px;
+  overflow: hidden;
+  transition: all 1s;
+}
+
+.wrapper-info-card-project-projectTeam-projectTime-projectDetails.active {
   display: flex;
   flex-direction: column;
+  height: 0px;
+  transition: height 500ms;
 }
 
 .info-card-project-projectTeam,
