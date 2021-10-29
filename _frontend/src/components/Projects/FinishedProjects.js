@@ -55,7 +55,7 @@ const FinishedProjects = () => {
           setIsLoading(false);
         })
         .catch((error) => {
-          const newError = error.toString().split(':')[1];
+          const newError = error.toString().split(":")[1];
           setDynamicMsg(newError);
         });
     }
@@ -85,7 +85,7 @@ const FinishedProjects = () => {
         }
       })
       .catch((error) => {
-        const newError = error.toString().split(':')[1];
+        const newError = error.toString().split(":")[1];
         if (error)
           SetError(
             finishedProjectsList,
@@ -106,60 +106,52 @@ const FinishedProjects = () => {
     fontSize: "30px",
     color: "var(--myGreen)",
   };
-
-  return (
-    <Wrapper>
-      {!isAuth ? (
-        <div className="container-finishedProjects">
+  
+  if (isAuth) {
+    return (
+      <Wrapper>
+        {!isAuth ? (
           <NavBar links={links_noSession} />
-          <Link style={LoadingStyle} to={"/login"}>
-            {dynamicMsg}
-          </Link>
-        </div>
-      ) : (
-        <div className="container-finishedProjects">
+        ) : (
           <NavBar links={links} />
-
-          {isLoading ? (
-            <div style={LoadingStyle}>Loading...</div>
-          ) : (
-            <div className="wrapper-finished-projects">
-              {finishedProjectsList.length > 0 ? (
-                <div className="finished-projects">
-                  {finishedProjectsList &&
-                    finishedProjectsList.map((project, key) => (
-                      <div style={{ width: "100%" }} key={key}>
-                        <ProjectTemplate
-                          dynamicMsg={
-                            error_project_Id === project.id ? dynamicMsg : null
-                          }
-                          logo={logo}
-                          projectId={project.id}
-                          projectName={project.projectName}
-                          projectTime={project.projectTime}
-                          projectTeam={project.projectTeam}
-                          projectDetails={project.projectDetails}
-                          projectOwner={project.projectOwner}
-                          projectOwnerPhoto={project.projectOwnerPhoto}
-                          handleDelete={handleDelete}
-                          timeLeft={0}
-                          finishedProject_Style={finishedProject_Style}
-                        />
-                      </div>
-                    ))}
-                </div>
-              ) : (
-                <div style={LoadingStyle}>
-                  Your finished projects list is empty!
-                </div>
-              )}
-            </div>
-          )}
-          <Footer />
-        </div>
-      )}
-    </Wrapper>
-  );
+        )}
+        {!projects.isLoading_Projects && !projects.isLoading_Projects ? (
+          <div style={{ width: "100%" }}>
+            {projects.projectsList && projects.projectsList.length > 0 ? (
+              <div style={{ width: "100%", margin: "15px 0px" }}>
+                {projects.projectsList &&
+                  projects.projectsList.map((project, key) => (
+                    <div style={{ width: "100%" }} key={key}>
+                      <ProjectTemplate
+                        dynamicMsg={
+                          error_project_Id === project.id ? dynamicMsg : null
+                        }
+                        logo={logo}
+                        projectId={project.id}
+                        projectName={project.projectName}
+                        projectTime={project.projectTime}
+                        projectTeam={project.projectTeam}
+                        projectDetails={project.projectDetails}
+                        projectOwner={project.projectOwner}
+                        projectOwnerPhoto={project.projectOwnerPhoto}
+                        handleDelete={handleDelete}
+                        timeLeft={0}
+                        finishedProject_Style={finishedProject_Style}
+                      />
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              <div style={LoadingStyle}>Your projects list is empty!</div>
+            )}
+          </div>
+        ) : (
+          <div style={LoadingStyle}>Loading...</div>
+        )}
+        <Footer />
+      </Wrapper>
+    );
+  } else return null;
 };
 
 export default FinishedProjects;
@@ -171,22 +163,5 @@ const Wrapper = styled.section`
   align-items: center;
   width: 100%;
   height: 100%;
-  margin: 0px auto;
-
-  .wrapper-finished-projects {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .finished-projects {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
+  margin: auto;
 `;

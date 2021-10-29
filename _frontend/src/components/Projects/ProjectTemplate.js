@@ -28,14 +28,14 @@ const ProjectTemplate = ({
   timeLeft,
   projectOwnerPhoto,
   projectOwner,
-  dynamicMsg
+  dynamicMsg,
 }) => {
   const [display, setDisplay] = useState("none");
   const [transition, setTransition] = useState("");
-  const [isActiv, setIsActiv] = useState('active');
+  const [isActiv, setIsActiv] = useState("active");
   const [iconCollapse, setIconCollapse] = useState(collaps_down);
   const [remainingTime, setRemainingTime] = useState(projectTime - timeLeft);
-  const [percentBar, setPercentBar] = useState(timeLeft * 100 / projectTime);
+  const [percentBar, setPercentBar] = useState((timeLeft * 100) / projectTime);
 
   const [styleBar, setStyleBar] = useState(
     remainingTime <= 0
@@ -69,39 +69,31 @@ const ProjectTemplate = ({
     textAlign: "center",
     fontWeight: "bolder",
     fontSize: "20px",
-    color: "salmon"
+    color: "salmon",
   };
 
   return (
     <div className="card-project">
-      {
-        <div style={dynamicStyle}>
-          {dynamicMsg}
-        </div>
-      }
+      {<div style={dynamicStyle}>{dynamicMsg}</div>}
       <div className="wrapper-titleProject-btnProject">
         <div className="info-card-project">
           <div className="wrapper-info-card-project-projectName">
             <h2 className="info-card-project-projectName ">
-              <p className="info-card-project-logo">
-                {logo}
-              </p>
+              <p className="info-card-project-logo">{logo}</p>
               {projectName}
             </h2>
           </div>
 
           <div className="wrapper-card-project-owner">
             <div className="card-project-owner">
-              {projectOwnerPhoto !== null
-                ? <img
-                    className="card-project-owner-img"
-                    src={projectOwnerPhoto}
-                    alt={"Owner Photo"}
-                  />
-                : null}
-              <h3 className="card-project-owner-name">
-                {projectOwner}
-              </h3>
+              {projectOwnerPhoto !== null ? (
+                <img
+                  className="card-project-owner-img"
+                  src={projectOwnerPhoto}
+                  alt={"Owner Photo"}
+                />
+              ) : null}
+              <h3 className="card-project-owner-name">{projectOwner}</h3>
             </div>
           </div>
         </div>
@@ -155,38 +147,41 @@ const ProjectTemplate = ({
         <div className="info-card-project-projectTeam">
           <div className="wrapper-label-info-card-project-projectTeam">
             <label className="label-info-card-project-projectTeam">
-              {" "}Team{" "}
+              {" "}
+              Team{" "}
             </label>
           </div>
-          <div className="projectTeam">
-            {projectTeam}
-          </div>
+          <div className="projectTeam">{projectTeam}</div>
         </div>
 
         <div className="info-card-project-projectTime">
           {/*  <div className="wrapper700px"> */}
           <div className="wrapper-label-info-card-project-projectTime">
             <label className="label-info-card-project-projectTime">
-              {" "}Deadline{" "}
+              {" "}
+              Deadline{" "}
             </label>
           </div>
 
           <div className="container-timeLeft" style={finishedProject_Style}>
             <div className="remainingTime">
-              {" "}<p className="timeline" style={styleBar} />
+              <p className="timeline" style={styleBar} />
               <p className="days-reining">
-                {" "}{remainingTime && remainingTime <= 0
-                  ? <p className="time-expired">Time Expired</p>
-                  : `${remainingTime.toString()} ${remainingTime > 1
-                      ? "days"
-                      : "day"}`}
+                {" "}
+                {remainingTime && remainingTime <= 0 ? (
+                  <p className="time-expired">Time Expired</p>
+                ) : (
+                  `${remainingTime.toString()} ${
+                    remainingTime > 1 ? "days" : "day"
+                  }`
+                )}
               </p>
             </div>
 
             <div className="wrapper-projectTime">
-              <p className="projecTime">{`${projectTime}  ${projectTime > 1
-                ? "days"
-                : "day"}`}</p>
+              <p className="projecTime flex350">{`${projectTime}  ${
+                projectTime > 1 ? "days" : "day"
+              }`}</p>
             </div>
           </div>
         </div>
@@ -194,12 +189,11 @@ const ProjectTemplate = ({
         <div className="info-card-project-projectDetails">
           <div className="wrapper-label-info-card-project-projectDetails">
             <label className="label-info-card-project-projectDetails">
-              {" "}Details{" "}
+              {" "}
+              Details{" "}
             </label>
           </div>
-          <p className="projectDetails">
-            {projectDetails}
-          </p>
+          <p className="projectDetails">{projectDetails}</p>
         </div>
       </div>
     </div>

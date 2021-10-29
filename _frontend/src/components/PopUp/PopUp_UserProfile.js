@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { URL_HEROKU } from "../_Utils/Dependency";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./PopUp_Styles.css";
 import { UserContext } from "../Context/UserContext";
@@ -40,7 +39,7 @@ const PopUp_UserProfile = ({ visibility, setVisibility }) => {
               <div style={{ fontSize: "15px" }}> Role</div>
               <p className="popUp-role">{`${roles}`}</p>
             </div>
-            <hr style={{background:'black'}} />
+            <hr style={{ background: "black" }} />
             <div className="wrapper-popUp-setting-popUp-logout">
               <div className="popUp-setting-btn">
                 <Link style={{ textDecoration: "none" }} to="/user-profile">

@@ -522,8 +522,23 @@ li {
     padding: 5px;
   }
 
+  .label-info-card-project-projectDetails,
+  .label-info-card-project-projectTeam,
+  .label-info-card-project-projectTime {
+    padding: 0;
+  }
+
   .btn-card-project {
     flex-direction: column-reverse;
+  }
+
+  .btn-colaps {
+    width: auto;
+    height: auto;
+    margin: auto;
+  }
+  .projecTime.flex350 {
+    display: none;
   }
 
   .container-timeLeft {
@@ -531,12 +546,6 @@ li {
     justify-content: center;
     margin: auto;
     width: 150px;
-  }
-
-  .btn-colaps {
-    width: auto;
-    height: auto;
-    margin: auto;
   }
 
   .projecTime {

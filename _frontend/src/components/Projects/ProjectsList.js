@@ -212,10 +212,10 @@ const ProjectsList = () => {
 export default ProjectsList;
 
 const Wrapper = styled.section`
-  display: flex;
+/*   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: center; */
   width: 100%;
   height: auto;
   margin: auto;
