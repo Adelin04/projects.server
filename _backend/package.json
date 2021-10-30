@@ -24,8 +24,9 @@
     "multer-s3": "^2.10.0",
     "mysql2": "^2.3.0",
     "nodemon": "^2.0.13",
-    "sequelize": "^6.6.5"
+    "sequelize": "^5.7.0"
   },
   "keywords": [],
   "description": ""
 }
+
