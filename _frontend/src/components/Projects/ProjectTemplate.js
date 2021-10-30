@@ -179,9 +179,13 @@ const ProjectTemplate = ({
             </div>
 
             <div className="wrapper-projectTime">
-              <p className="projecTime flex350">{`${projectTime}  ${
-                projectTime > 1 ? "days" : "day"
-              }`}</p>
+              {remainingTime && remainingTime > 0 ? (
+                <p className="projecTime flex350">{`${projectTime}  ${
+                  projectTime > 1 ? "days" : "day"
+                }`}</p>
+              ) : (
+                " Time Expired"
+              )}
             </div>
           </div>
         </div>
