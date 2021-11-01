@@ -10,7 +10,7 @@ const initialState = {
   projectsList: [],
   finishedProjectsList: [],
   error_Project: null,
-  isLoading_Projects: true,
+  isLoading_Projects: true
 };
 const ProjectsProvider = ({ children }) => {
   const [projects, dispatch_projects] = useReducer(
@@ -18,28 +18,29 @@ const ProjectsProvider = ({ children }) => {
     initialState
   );
 
-  const fetchProjects = async (token) => {
+  const fetchProjects = async token => {
     await fetch(`${URL_HEROKU}/project/get/projects`, {
       headers: {
         authorization: token,
-        "Content-Type": "application/json",
-      },
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         const { succes, projectsList } = data;
         console.log("projectsList", data);
         if (succes) {
           dispatch_projects({
             type: FETCH_PROJECTS,
             payload: projectsList.filter(
-              (project) => project.isFinished !== true
+              project => project.isFinished !== true
             ),
-            isLoading_Projects: false,
+            isLoading_Projects: false
           });
         }
       })
-      .catch((err) => console.log(err.toString()));
+      .catch(err => console.log(err.toString()));
   };
 
   useEffect(() => {

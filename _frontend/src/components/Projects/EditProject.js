@@ -207,7 +207,7 @@ class EditProject extends React.Component {
       <div className="projects">
         <SliderUsers
           isActiv={this.state.isActiv}
-          usersList={this.state.usersList}
+          usersList={listUsers}
         />
         {this.renderRedirect()}
         <NavBar links={links} />
@@ -279,3 +279,23 @@ class EditProject extends React.Component {
 }
 
 export default EditProject;
+
+//console.log(event.target.id);
+//console.log(event.target.value);
+/* let TMP_list = [];
+    if (event.target.checked) {
+      TMP_list.push(...this.state.projectTeam, event.target.value);
+      this.setState({
+        [event.target.name]: TMP_list
+      });
+    } else if (!event.target.checked) {
+      if (this.state.projectTeam.length > 0) {
+        let remainingItems = this.state.projectTeam.filter(
+          element => element !== event.target.value
+        );
+        console.log('remainingItems',remainingItems);
+        this.setState({
+          [event.target.name]: remainingItems
+        });
+      }
+    } */
