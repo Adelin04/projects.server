@@ -6,9 +6,6 @@ import {
   SET_CAPITALIZE_USER_PROFILE,
   SET_USERLOGGED_INFO,
 } from "../Reducer/Action";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-// import { useCookies } from "react-cookie";
 
 const UserContext = createContext();
 
@@ -19,16 +16,17 @@ const initialState = {
 };
 const UserProvider = ({ children }) => {
   const [userLogged, dispatch_user] = useReducer(User_Reducer, initialState);
-  console.log("user", userLogged);
+
   const fetchUserInfo = async (token) => {
     await fetch(`${URL_HEROKU}/auth/authChecker`, {
-      headers: { authorization: token },
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => {
         const { succes, userProfile, capitalizeUser } = data;
-        // initialState.isAuth = succes;
-        // initialState.userLoggedInfo = userProfile;
         dispatch_user({ type: SET_AUTH, payload: succes });
         dispatch_user({ type: SET_USERLOGGED_INFO, payload: userProfile });
         dispatch_user({

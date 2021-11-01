@@ -20,7 +20,10 @@ const ProjectsProvider = ({ children }) => {
 
   const fetchProjects = async (token) => {
     await fetch(`${URL_HEROKU}/project/get/projects`, {
-      headers: { authorization: token },
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => {

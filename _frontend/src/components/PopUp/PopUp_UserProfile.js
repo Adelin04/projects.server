@@ -13,7 +13,7 @@ const PopUp_UserProfile = ({ visibility, setVisibility }) => {
   const { role } = useContext(UserContext).userLogged.userLoggedInfo;
   let roles = [];
 
-  if (role !== null) {
+  if (role !== null && role !== undefined) {
     const TMP_roles = role.split(",");
     TMP_roles.forEach((element) => {
       roles.push(element.split("_")[1] + "/");

@@ -2,9 +2,13 @@
   "name": "projects-server",
   "version": "1.0.0",
   "main": "app.js",
+  "engines": {
+    "node": "14.15.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start-server": "node app.js",
+    "start": "node app.js"
   },
   "author": "Adelin",
   "license": "ISC",
@@ -24,9 +28,8 @@
     "multer-s3": "^2.10.0",
     "mysql2": "^2.3.0",
     "nodemon": "^2.0.13",
-    "sequelize": "^5.7.0"
+    "sequelize": "^6.6.5"
   },
   "keywords": [],
   "description": ""
 }
-

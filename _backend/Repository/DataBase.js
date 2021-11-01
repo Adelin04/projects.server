@@ -17,7 +17,6 @@
 // module.exports = connection;
 
 // Sequelize
-/*  "sequelize": "^6.6.5" */
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(

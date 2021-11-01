@@ -168,13 +168,11 @@ const ProjectTemplate = ({
               <p className="timeline" style={styleBar} />
               <p className="days-reining">
                 {" "}
-                {remainingTime && remainingTime <= 0 ? (
-                  <p className="time-expired">Time Expired</p>
-                ) : (
-                  `${remainingTime.toString()} ${
-                    remainingTime > 1 ? "days" : "day"
-                  }`
-                )}
+                {remainingTime && remainingTime <= 0
+                  ? " "
+                  : `${remainingTime.toString()} ${
+                      remainingTime > 1 ? "days" : "day"
+                    }`}
               </p>
             </div>
 
@@ -184,7 +182,7 @@ const ProjectTemplate = ({
                   projectTime > 1 ? "days" : "day"
                 }`}</p>
               ) : (
-                " Time Expired"
+                <p className="projecTime flex350">Time Expired</p>
               )}
             </div>
           </div>
