@@ -14,7 +14,7 @@ import SliderUsers from "../_Utils/SliderUsers";
 
 let links = [
   { url: "/", link: "Home" },
-  { url: "/dashboard", link: "Dashboard" }
+  { url: "/dashboard", link: "Dashboard" },
 ];
 
 class EditProject extends React.Component {
@@ -34,13 +34,13 @@ class EditProject extends React.Component {
       redirect: false,
       isActiv: "active",
       visibility: "hidden",
-      btnMsg: "Done"
+      btnMsg: "Done",
     };
   }
 
   setRedirect = () => {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   };
 
@@ -52,73 +52,70 @@ class EditProject extends React.Component {
 
   loadUsers = () => {
     fetch(`${URL_HEROKU}/auth/get/all-users`)
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
+        console.log("data", data);
         this.setState({ usersList: data });
       });
   };
 
   componentDidMount() {
-    const { match: { params } } = this.props;
+    const {
+      match: { params },
+    } = this.props;
 
-    this.context.dispatch_projects({
-      type: REMOVE_PROJECT,
-      payload: [
-        ...this.context.projects.projectsList.filter(
-          project => project.id !== Number(params.id)
-        )
-      ]
-    });
     fetch(`${URL_HEROKU}/project/get/edit-project/${params.id}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const { succes, editProject } = data;
         if (succes)
           this.setState({
             projectName: editProject.projectName,
-            projectTeam: editProject.projectTeam,
+            projectTeam: editProject.projectTeam.split(","),
             projectTime: editProject.projectTime,
-            projectDetails: editProject.projectDetails
+            projectDetails: editProject.projectDetails,
           });
       });
     this.loadUsers();
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     let self = this;
-    const { match: { params } } = this.props;
+    const {
+      match: { params },
+    } = this.props;
 
     const dataEditProject = {
       projectName: self.state.projectName,
       projectTeam: self.state.projectTeam.toString(),
       projectTime: self.state.projectTime,
-      projectDetails: self.state.projectDetails
+      projectDetails: self.state.projectDetails,
     };
 
     fetch(`${URL_HEROKU}/project/put/edited/project/${params.id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataEditProject)
+      body: JSON.stringify(dataEditProject),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log("data", data);
         const { succes, editedProject, error } = data;
         if (succes) {
           this.context.dispatch_projects({
             type: EDIT_DONE,
-            payload: [...this.context.projects.projectsList, editedProject]
+            payload: [...this.context.projects.projectsList, editedProject],
           });
         }
         if (!succes) {
@@ -126,7 +123,7 @@ class EditProject extends React.Component {
           console.log(error);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     self.setState({
       btnMsg: "Loading...",
@@ -134,13 +131,20 @@ class EditProject extends React.Component {
       projectTime: "",
       projectDetails: "",
       projectTeam: [],
-      usersList: []
+      usersList: [],
     });
-
+    this.context.dispatch_projects({
+      type: REMOVE_PROJECT,
+      payload: [
+        ...this.context.projects.projectsList.filter(
+          (project) => project.id !== Number(params.id)
+        ),
+      ],
+    });
     this.setRedirect();
   };
 
-  handleChangeAddUser = event => {
+  handleChangeAddUser = (event) => {
     //console.log(event.target.id);
     //console.log(event.target.value);
 
@@ -149,21 +153,19 @@ class EditProject extends React.Component {
     if (event.target.checked) {
       TMP_list.push(...this.state.projectTeam, event.target.value);
       this.setState({
-        [event.target.name]: TMP_list
+        [event.target.name]: TMP_list,
       });
-      console.log("TMP_list in if ->", TMP_list);
     } else if (!event.target.checked) {
       let remainingItems = usersProject
         .split(",")
-        .filter(element => element !== event.target.value);
+        .filter((element) => element !== event.target.value);
       this.setState({
-        [event.target.name]: remainingItems
+        [event.target.name]: remainingItems,
       });
     }
-    console.log("TMP_list in else if ->", TMP_list);
   };
 
-  handleGetUsers = e => {
+  handleGetUsers = (e) => {
     e.preventDefault();
     if (this.state.isActiv === "active") {
       this.setState({ isActiv: null });
@@ -187,7 +189,7 @@ class EditProject extends React.Component {
         isChecked = false;
       }
       listUsers.push(
-        <li key={id}>
+        <li key={id} style={{ minWidth: "190px" }}>
           <input
             className="input-listUsers"
             type="checkbox"
@@ -205,10 +207,7 @@ class EditProject extends React.Component {
     let listStyle = { visibility: this.state.visibility };
     return (
       <div className="projects">
-        <SliderUsers
-          isActiv={this.state.isActiv}
-          usersList={listUsers}
-        />
+        <SliderUsers isActiv={this.state.isActiv} usersList={listUsers} />
         {this.renderRedirect()}
         <NavBar links={links} />
 
