@@ -50,7 +50,7 @@ const FinishedProjects = () => {
         .then((Response) => Response.json())
         .then((data) => {
           const { finishedProjectsList } = data;
-          // console.log("data.projects ->", finishedProjectsList);
+           console.log("data.projects ->", finishedProjectsList);
           setFinishedProjectsList(finishedProjectsList);
           setIsLoading(false);
         })
@@ -117,10 +117,10 @@ const FinishedProjects = () => {
         )}
         {!projects.isLoading_Projects && !projects.isLoading_Projects ? (
           <div style={{ width: "100%" }}>
-            {projects.projectsList && projects.projectsList.length > 0 ? (
+            {projects.finishedProjectsList && projects.finishedProjectsList.length > 0 ? (
               <div style={{ width: "100%", margin: "15px 0px" }}>
-                {projects.projectsList &&
-                  projects.projectsList.map((project, key) => (
+                {projects.finishedProjectsList &&
+                  projects.finishedProjectsList.map((project, key) => (
                     <div style={{ width: "100%" }} key={key}>
                       <ProjectTemplate
                         dynamicMsg={
