@@ -16,11 +16,10 @@ const NavBar = ({ links }) => {
   const userLogged = useContext(UserContext);
   const [visibility, setVisibility] = useState("hidden");
 
-  const handleLogOut = async () => {
+/*   const handleLogOut = async () => {
     const response = await fetch(`${URL_HEROKU}logout-user`);
     const responseJson = await response.json();
-    console.log("responseJson", responseJson);
-  };
+  }; */
 
   return (
     <div className="navBar">
@@ -43,7 +42,7 @@ const NavBar = ({ links }) => {
           style={{ textDecoration: "none", color: "black" }}
           onClick={() => {
             localStorage.clear();
-            handleLogOut();
+            // handleLogOut();
           }}
           to={"/login"}
         >

@@ -72,7 +72,7 @@ const ProjectsList = () => {
   //----------btn-Edit
   const handleEdit = (e) => {
     const id = Number(e.target.id);
-    console.log("id", e.target);
+
     try {
       setEditID(id);
       setRedir(history.getProject);

@@ -9,15 +9,15 @@ const Get_ProjectByUser = async (req, res) => {
 
   const userLogged = await User.findOne({
     attributes: ["firstName", "lastName"],
-    where: { email: email },
+    where: { email: email }
   });
 
   const projectsList = await Projects.findAll({
     where: {
       projectTeam: {
-        [Op.like]: "%" + `${userLogged.firstName} ${userLogged.lastName}` + "%",
-      },
-    },
+        [Op.like]: "%" + `${userLogged.firstName} ${userLogged.lastName}` + "%"
+      }
+    }
   });
 
   res.send({ succes: true, projectsList: projectsList });
@@ -31,13 +31,13 @@ const Post_CreateNewProject = async (req, res) => {
     projectDetails,
     projectOwner,
     projectOwnerPhoto,
-    projectOwnerPhoto_foreignKeyUserId,
+    projectOwnerPhoto_foreignKeyUserId
   } = req.body;
 
   if (req.body !== null) {
     await Projects.findOne({
-      where: { projectName: projectName },
-    }).then((findProject) => {
+      where: { projectName: projectName }
+    }).then(findProject => {
       if (!findProject) {
         let newProject = new Projects({
           projectName,
@@ -46,7 +46,7 @@ const Post_CreateNewProject = async (req, res) => {
           projectDetails,
           projectOwner,
           projectOwnerPhoto,
-          projectOwnerPhoto_foreignKeyUserId,
+          projectOwnerPhoto_foreignKeyUserId
         });
         newProject.save().then(() => {
           return res.send({ succes: true, newProject: newProject });
@@ -59,7 +59,7 @@ const Post_CreateNewProject = async (req, res) => {
 const Get_EditProject = async (req, res) => {
   const editProject_ID = req.params.id;
   const editProject = await Projects.findOne({
-    where: { id: editProject_ID },
+    where: { id: editProject_ID }
   });
   return res.send({ succes: true, editProject: editProject });
 };
@@ -69,16 +69,16 @@ const Put_EditedProject = async (req, res) => {
 
   try {
     const foundItem = await Projects.findOne({
-      where: { id: editedProject_ID },
+      where: { id: editedProject_ID }
     });
 
     if (foundItem) {
       await Projects.update(req.body, {
-        where: { id: editedProject_ID },
+        where: { id: editedProject_ID }
       });
 
       const editedProject = await Projects.findOne({
-        where: { id: editedProject_ID },
+        where: { id: editedProject_ID }
       });
       return res.send({ succes: true, editedProject: editedProject });
     }
@@ -93,17 +93,18 @@ const Get_FinishedProject = async (req, res) => {
 
   const userLogged = await User.findOne({
     attributes: ["firstName", "lastName"],
-    where: { email: email },
+    where: { email: email }
   });
 
   const finishedProjectsList = await Projects.findAll({
     where: {
       projectTeam: {
-        [Op.like]: "%" + `${userLogged.firstName} ${userLogged.lastName}` + "%",
+        [Op.like]: "%" + `${userLogged.firstName} ${userLogged.lastName}` + "%"
       },
-      isFinished: { [Op.like]: true },
-    },
+      isFinished: { [Op.like]: true }
+    }
   });
+  console.log("finishedProjectsList => ", finishedProjectsList);
   res.send({ succes: true, finishedProjectsList: finishedProjectsList });
 };
 
@@ -138,5 +139,5 @@ module.exports = {
   Put_EditedProject: Put_EditedProject,
   Get_FinishedProject: Get_FinishedProject,
   Post_SetFinishedProject: Post_SetFinishedProject,
-  Post_DeleteProject: Post_DeleteProject,
+  Post_DeleteProject: Post_DeleteProject
 };

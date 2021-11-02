@@ -18,7 +18,7 @@ const UploadFile = async (req, res) => {
       originalname.toString().split(".")[1].trim().split(".")[1]
     }`
   );
-  const urlPhoto = `https:projects-app-photo.s3.eu-central-1.amazonaws.com/${userLogged_EMAIL
+  const urlPhoto = `https://projects-app-photo.s3.eu-central-1.amazonaws.com/${userLogged_EMAIL
     .toString()
     .split("@")[0]
     .trim()}.${originalname.toString().split(".")[1].trim()}`;

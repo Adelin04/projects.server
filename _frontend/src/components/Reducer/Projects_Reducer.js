@@ -41,4 +41,3 @@ export const Projects_reducer = (state, action) => {
   //throw new Error(`No matching "${action.type}" - action type`);
 };
 
-/* export default projects_reducer; */

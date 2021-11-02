@@ -56,7 +56,6 @@ class EditProject extends React.Component {
         return res.json();
       })
       .then((data) => {
-        console.log("data", data);
         this.setState({ usersList: data });
       });
   };
@@ -110,7 +109,6 @@ class EditProject extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
         const { succes, editedProject, error } = data;
         if (succes) {
           this.context.dispatch_projects({
@@ -177,7 +175,6 @@ class EditProject extends React.Component {
   };
 
   render() {
-    console.log("this.context", this.context);
     let isChecked = false;
     const listUsers = [];
     const projectTeam = this.state.projectTeam;

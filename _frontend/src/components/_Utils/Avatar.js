@@ -66,7 +66,7 @@ const Avatar = () => {
     formData.append("file", image);
     formData.append("userLoggedID", userLoggedID);
     formData.append("userLogged_EMAIL", userLogged_EMAIL);
-    console.log(userLoggedID);
+
     try {
       if (image !== null)
         if (sizeImage < 1048576) {
@@ -80,18 +80,8 @@ const Avatar = () => {
             .then((response) => response.json())
             .then((data) => {
               const { succes, urlPhoto, msg } = data;
-              console.log("data avatar", data);
               if (succes) {
                 setDynamicMsg(msg.split(".")[0]);
-                /* console.log("data set photo ->", data);
-                const items = projects.projects.map((project) => {
-                  if (parseInt(project.userID_foreign) === userLoggedID)
-                    project.projectOwnerPhoto = data.finalEndpointUrl;
-                  return project;
-                });
-                items.forEach((element) => {
-                  console.log("items", element);
-                }) */
                 dispatch_projects({
                   type: CHANGE_PATH_USER_IMAGE,
                   payload: [
@@ -128,17 +118,7 @@ const Avatar = () => {
       {<div style={dynamicStyle}>{dynamicMsg}</div>}
       {redirect ? <Redirect to={"/dashboard"} /> : null}
       <div style={{ position: "relative" }} className="wrapper-img">
-        {/*           <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%,-50%)",
-              fontSize: "25px"
-            }}
-            >
-            {this.state.Loading ? "Loading..." : null}
-          </div> */}
+
         <ReactAvatarEditor
           className="editor-canvas"
           scale={parseFloat(scale)}

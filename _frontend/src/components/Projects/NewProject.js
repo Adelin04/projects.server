@@ -26,12 +26,8 @@ console.log(new Date().toISOString()); */
 
 const NewProject = () => {
   const { projects, dispatch_projects } = useContext(ProjectsContext);
-  const { userLogged } = useContext(UserContext);
-
-  const { projectsList } = useContext(ProjectsContext).projects.projectsList;
   const { userLoggedInfo } = useContext(UserContext).userLogged;
 
-  console.log("projectsList newP", projects.projectsList);
 
   const [projectName, setProjectName] = useState("");
   const [projectTime, setProjectTime] = useState("");
@@ -112,12 +108,9 @@ const NewProject = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
         const { succes, newProject } = data;
         if (succes) {
           setIsSucces(succes);
-          console.log("projects.projectsList", projects.projectsList);
-          console.log("newProject", newProject);
           newProject.createdAt = new Date().toISOString();
           newProject.updatedAt = new Date().toISOString();
           dispatch_projects({

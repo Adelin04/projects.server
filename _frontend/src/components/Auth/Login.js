@@ -47,7 +47,6 @@ const Login = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("data", data);
         const {
           succes,
           token,
@@ -55,7 +54,6 @@ const Login = () => {
           capitalizeUser,
           projectsList
         } = data;
-        console.log("data.projectsList -> ", projectsList);
         if (succes) {
           dispatch_user({ type: SET_AUTH, payload: data.succes });
           dispatch_user({ type: SET_USERLOGGED_INFO, payload: userProfile });

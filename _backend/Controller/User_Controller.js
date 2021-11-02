@@ -38,8 +38,7 @@ const Register = async (req, res) => {
 
 const Login = async (req, res) => {
   const { email, password } = req.body;
-  console.log("email", email);
-  console.log("password", password);
+
   let existUser = await User.findOne({
     where: {
       email: email

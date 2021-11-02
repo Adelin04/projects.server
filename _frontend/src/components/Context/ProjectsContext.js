@@ -29,7 +29,6 @@ const ProjectsProvider = ({ children }) => {
       .then(response => response.json())
       .then(data => {
         const { succes, projectsList } = data;
-        console.log("projectsList", data);
         if (succes) {
           dispatch_projects({
             type: FETCH_PROJECTS,

@@ -27,8 +27,6 @@ const links_noSession = [
 const FinishedProjects = () => {
   const { isAuth } = useContext(UserContext).userLogged;
   const { projects, dispatch_projects } = useContext(ProjectsContext);
-  console.log(isAuth);
-  console.log(projects);
 
   const [finishedProjectsList, setFinishedProjectsList] = useState([]);
   const [isLoading, setIsLoading] = useState([true]);
@@ -50,7 +48,6 @@ const FinishedProjects = () => {
         .then((Response) => Response.json())
         .then((data) => {
           const { finishedProjectsList } = data;
-           console.log("data.projects ->", finishedProjectsList);
           setFinishedProjectsList(finishedProjectsList);
           setIsLoading(false);
         })
@@ -63,7 +60,6 @@ const FinishedProjects = () => {
 
   const handleDelete = (event) => {
     const id = Number(event.target.id);
-    console.log(id);
 
     fetch(`${URL_HEROKU}/project/delete/project/${id}`, {
       method: "DELETE",
@@ -81,7 +77,6 @@ const FinishedProjects = () => {
           );
           setFinishedProjectsList(TMP_list);
           dispatch_projects({ type: DELETE_PROJECT, payload: TMP_list });
-          console.log("TMP_list", TMP_list);
         }
       })
       .catch((error) => {
@@ -117,10 +112,10 @@ const FinishedProjects = () => {
         )}
         {!projects.isLoading_Projects && !projects.isLoading_Projects ? (
           <div style={{ width: "100%" }}>
-            {projects.finishedProjectsList && projects.finishedProjectsList.length > 0 ? (
+            {finishedProjectsList && finishedProjectsList.length > 0 ? (
               <div style={{ width: "100%", margin: "15px 0px" }}>
-                {projects.finishedProjectsList &&
-                  projects.finishedProjectsList.map((project, key) => (
+                {finishedProjectsList &&
+                  finishedProjectsList.map((project, key) => (
                     <div style={{ width: "100%" }} key={key}>
                       <ProjectTemplate
                         dynamicMsg={
