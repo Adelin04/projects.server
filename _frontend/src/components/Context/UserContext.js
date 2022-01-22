@@ -28,7 +28,6 @@ const UserProvider = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
         const { succes, userProfile, capitalizeUser } = data;
         if (succes) {
           dispatch_user({ type: SET_AUTH, payload: succes });
