@@ -37,16 +37,17 @@ const UserProvider = ({ children }) => {
             type: SET_CAPITALIZE_USER_PROFILE,
             payload: capitalizeUser,
           });
-        } else return null;
+        } else {
+          localStorage.clear();
+          return null;
+        }
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null) {
-      fetchUserInfo(localStorage.getItem("token"));
-    }
-  }, []);
+    fetchUserInfo(localStorage.getItem("token"));
+  }, [localStorage.getItem("token")]);
 
   return (
     <UserContext.Provider value={{ userLogged, dispatch_user }}>
