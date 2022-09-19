@@ -102,7 +102,7 @@ const UserProfile = User => {
 };
 
 
-//  method for check if user is authenticate
+//  method to check if user is authenticate
 const AuthChecker = async (req, res) => {
   const token = req.headers.authorization;
 
