@@ -10,20 +10,26 @@ const s3 = new AWS.S3({
 });
 
 const UploadFile = async (req, res) => {
+
+  //  destructuring req object
   const { originalname, mimetype, path, size } = req.file;
   const { userLoggedID, userLogged_EMAIL } = req.body;
-  console.log(
-    "test",
-    `${userLogged_EMAIL.toString().split("@")[0].trim()}.${
-      originalname.toString().split(".")[1].trim().split(".")[1]
-    }`
-  );
+
+  /*   console.log(
+      "test",
+      `${userLogged_EMAIL.toString().split("@")[0].trim()}.${
+        originalname.toString().split(".")[1].trim().split(".")[1]
+      }`
+    ); */
+
+  //  construct the URL path for the profile user image using the email address of the logged in user
   const urlPhoto = `https://projects-app-photo.s3.eu-central-1.amazonaws.com/${userLogged_EMAIL
     .toString()
     .split("@")[0]
     .trim()}.${originalname.toString().split(".")[1].trim()}`;
 
   const fileStream = fs.createReadStream(path);
+
   await User.update(
     {
       urlPhoto: urlPhoto,
@@ -75,4 +81,3 @@ module.exports = {
   UploadFile: UploadFile,
 };
 
-//https://www.zeolearn.com/magazine/uploading-files-to-aws-s3-using-nodejs

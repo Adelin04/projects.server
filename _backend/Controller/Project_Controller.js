@@ -3,15 +3,23 @@ const { Op } = require("sequelize");
 const Projects = require("../Models/Project_Model");
 const jwt = require("jsonwebtoken");
 
+//  GET: get all projects for user logged in
 const Get_ProjectByUser = async (req, res) => {
   const token = req.headers.authorization;
   const { email } = jwt.verify(token, process.env.secretKey);
+
 
   const userLogged = await User.findOne({
     attributes: ["firstName", "lastName"],
     where: { email: email }
   });
 
+  //  check if user is logged in
+  if (userLogged === null) {
+    res.send({ succes: false, msg: 'You must be logged in.' });
+  }
+
+  //  get all projects
   const projectsList = await Projects.findAll({
     where: {
       projectTeam: {
@@ -23,7 +31,11 @@ const Get_ProjectByUser = async (req, res) => {
   res.send({ succes: true, projectsList: projectsList });
 };
 
+
+//  POST: create a new project
 const Post_CreateNewProject = async (req, res) => {
+
+  //destructuring req object
   const {
     projectName,
     projectTeam,
@@ -56,6 +68,7 @@ const Post_CreateNewProject = async (req, res) => {
   } else res.send({ succes: false });
 };
 
+//  GET: get project by id to editing
 const Get_EditProject = async (req, res) => {
   const editProject_ID = req.params.id;
   const editProject = await Projects.findOne({
@@ -64,6 +77,7 @@ const Get_EditProject = async (req, res) => {
   return res.send({ succes: true, editProject: editProject });
 };
 
+// PUT: update project
 const Put_EditedProject = async (req, res) => {
   const editedProject_ID = req.params.id;
 
@@ -87,6 +101,7 @@ const Put_EditedProject = async (req, res) => {
   }
 };
 
+//  GET: get all finished projects
 const Get_FinishedProject = async (req, res) => {
   const token = req.headers.authorization;
   const { email } = jwt.verify(token, process.env.secretKey);
@@ -108,6 +123,7 @@ const Get_FinishedProject = async (req, res) => {
   res.send({ succes: true, finishedProjectsList: finishedProjectsList });
 };
 
+//  POST: create new finished project
 const Post_SetFinishedProject = async (req, res) => {
   const finishedProject_ID = req.params.id;
   try {
@@ -122,6 +138,7 @@ const Post_SetFinishedProject = async (req, res) => {
   }
 };
 
+// DELETE: delete project by id
 const Post_DeleteProject = async (req, res) => {
   const deleteProject_ID = req.params.id;
   try {

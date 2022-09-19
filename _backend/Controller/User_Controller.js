@@ -5,9 +5,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+
+//  POST: Register new user
 const Register = async (req, res) => {
+  //  destructuring the req object
   const { firstName, lastName, email, password } = req.body;
 
+  // check if the current user already has an account and if it is null, create a new user
   if (req.body !== null) {
     await User.findOne({
       where: {
@@ -24,52 +28,67 @@ const Register = async (req, res) => {
           email: email,
           password: hashPassword
         });
-        // req.session.user = newUser.id;
         res.send({ succes: true });
         return newUser.save();
       })
       .catch(error => {
-        // const newError = error.toString().split(":")[1];
-        res.send({ succes: false });
+        const newError = error.toString().split(":")[1];
+        res.send({ succes: false, error: newError });
       });
   } else res.send({ succes: false });
-  // res.send({ succes: true });
 };
 
+//  POST: Login user 
 const Login = async (req, res) => {
+  //  destructuring the req object
   const { email, password } = req.body;
 
+  //  check if email from current user exist
   let existUser = await User.findOne({
     where: {
       email: email
     }
   });
-  if (existUser) {
-    let doMatch = await bcrypt.compare(password, existUser.password);
+
+  if (!existUser) {
+    return res.send({ succes: false, msg: 'For this email address is not created an account ' });
+  }
+
+  //  compare hash password for current user with the exist hash password from db
+  let doMatch = await bcrypt.compare(password, existUser.password);
+  //  if exist password matching generate a new token
+
+  if (doMatch) {
     let token = jwt.sign({ user_id: User.id, email }, process.env.secretKey);
-    if (doMatch) {
-      //  req.session.user = existUser.id;
-      // console.log("req.session", req.session.user);
-      let capitalizeUser = `${existUser.firstName[0]} ${existUser.lastName[0]}`;
-      let projectsList = await Projects.findAll({
-        where: {
-          projectTeam: {
-            [Op.like]:
-              "%" + `${existUser.firstName} ${existUser.lastName}` + "%"
-          }
+    //  req.session.user = existUser.id;
+    // console.log("req.session", req.session.user);
+    let capitalizeUser = `${existUser.firstName[0]} ${existUser.lastName[0]}`;
+
+    // get all projects for current user by user name
+    let projectsList = await Projects.findAll({
+      where: {
+        projectTeam: {
+          [Op.like]:
+            "%" + `${existUser.firstName} ${existUser.lastName}` + "%"
         }
-      });
-      return res.send({
-        succes: true,
-        token: token,
-        userProfile: UserProfile(existUser),
-        capitalizeUser: capitalizeUser,
-        projectsList: projectsList
-      });
-    } else return res.send({ succes: false });
-  } else return res.send({ succes: false });
+      }
+    });
+
+    //  return an object with new token,user profile and user details and all projects for current user 
+    return res.send({
+      succes: true,
+      token: token,
+      userProfile: UserProfile(existUser),
+      capitalizeUser: capitalizeUser,
+      projectsList: projectsList
+    });
+
+  }
+  return res.send({ succes: false, msg: 'Something went wrong' });
 };
 
+
+//  method to creating a new user profile
 const UserProfile = User => {
   let profile = {
     id: User.id,
@@ -82,6 +101,8 @@ const UserProfile = User => {
   return profile;
 };
 
+
+//  method for check if user is authenticate
 const AuthChecker = async (req, res) => {
   const token = req.headers.authorization;
 
@@ -109,6 +130,7 @@ const AuthChecker = async (req, res) => {
   }
 };
 
+//  GET: get list with all users
 const GetAllUsers = async (req, res) => {
   let listUsers_String = [];
   let allUsers = await User.findAll({
@@ -122,8 +144,9 @@ const GetAllUsers = async (req, res) => {
   res.status(200).send(listUsers_String);
 };
 
+// POST: 
 const PostSetPhotoUser = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 };
 
 module.exports = {

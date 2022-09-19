@@ -166,7 +166,7 @@ const ProjectTemplate = ({
           <div className="container-timeLeft" style={finishedProject_Style}>
             <div className="remainingTime">
               <p className="timeline" style={styleBar} />
-              <p className="days-reining">
+              <p className="days-left">
                 {" "}
                 {remainingTime && remainingTime <= 0
                   ? " "
