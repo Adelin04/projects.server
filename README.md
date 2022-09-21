@@ -13,24 +13,24 @@ Tech stack used:
  - serve images => AWS S3
 
 # Endpoints backend API
-  UserEndpoint:
-    - POST: /register
-    - POST: /login
-    - POST: /user-profile
-    - GET:  authChecker
-    - GET:  /get/all-users
+UserEndpoint:
+- POST: /register
+- POST: /login
+- POST: /user-profile
+- GET:  authChecker
+- GET:  /get/all-users
     
-  Projects endpoints:
-    - GET:  /get/projects
-    - POST: /post/newProject
-    - GET: /get/edit-project/:id
-    - PUT:  /put/edited/project/:id
-    - POST: /get/finished-project
-    - POST: /move/finished-project/:id
-    - DELETE: /delete/project/:id
+Projects endpoints:
+- GET:  /get/projects
+- POST: /post/newProject
+- GET: /get/edit-project/:id
+- PUT:  /put/edited/project/:id
+- POST: /get/finished-project
+- POST: /move/finished-project/:id
+- DELETE: /delete/project/:id
   
-  Aws endpoints:
-    - POST: /setPath/user-profile-photo
+Aws endpoints:
+- POST: /setPath/user-profile-photo
   
   Photo:
     ![home](https://user-images.githubusercontent.com/63923347/191604634-5f43c4dc-488d-461c-8bdf-545ce6a7e138.png)
