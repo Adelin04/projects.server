@@ -119,7 +119,6 @@ const Get_FinishedProject = async (req, res) => {
       isFinished: { [Op.like]: true }
     }
   });
-  console.log("finishedProjectsList => ", finishedProjectsList);
   res.send({ succes: true, finishedProjectsList: finishedProjectsList });
 };
 

@@ -16,10 +16,10 @@ const NavBar = ({ links }) => {
   const userLogged = useContext(UserContext);
   const [visibility, setVisibility] = useState("hidden");
 
-/*   const handleLogOut = async () => {
-    const response = await fetch(`${URL_HEROKU}logout-user`);
-    const responseJson = await response.json();
-  }; */
+  /*   const handleLogOut = async () => {
+      const response = await fetch(`${URL_HEROKU}logout-user`);
+      const responseJson = await response.json();
+    }; */
 
   return (
     <div className="navBar">
@@ -52,12 +52,14 @@ const NavBar = ({ links }) => {
             : null}
         </NavLink>
       </div>
-      {visibility === "visible" ? (
-        <PopUp_UserProfile
-          visibility={visibility}
-          setVisibility={setVisibility}
-        />
-      ) : null}
+      
+        {visibility === "visible" ? (
+          <PopUp_UserProfile
+            visibility={visibility}
+            setVisibility={setVisibility}
+          />
+        ) : null}
+      
     </div>
   );
 };

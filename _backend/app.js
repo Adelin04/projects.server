@@ -7,13 +7,13 @@ const MySqlStore = require("express-mysql-session")(session);
 const UserRoutes = require("./Routes/UserRoutes");
 const ProjectRoutes = require("./Routes/ProjectRoutes");
 const AwsRoutes = require("./Routes/AwsRoutes");
-const sequelize = require("./Repository/DataBase");
+const sequelize = require("./ConnectionDB/DataBase");
 const multer = require("multer");
 
 //  emv config
 require("dotenv").config();
 
-//  start express app
+//  express app initialization
 const app = express();
 
 const upload = multer({ dest: "uploads/" });
@@ -31,7 +31,7 @@ const oneDay = 1000 * 60 * 60 * 24;
 app.use(cors())
 
 
-//Controllers
+//  Routes
 app.use("/auth/", UserRoutes);
 app.use("/project/", ProjectRoutes);
 app.use("/aws/", upload.single("file"), AwsRoutes);
@@ -43,9 +43,24 @@ sequelize.sync(
   }
 );
 
-const server = app.listen(process.env.PORT || 4000, () => {
-  const port = server.address().port;
-  console.log(`Server is running on port ${port}`);
-});
 
-// git checkout master -f
+//  start server app
+const server = app.listen(process.env.PORT || 4000, async () => {
+
+  try {
+
+    await sequelize.authenticate().then(() => {
+      console.log('Connection has been established successfully.');
+
+      const port = server.address().port;
+      console.log(`Server is running on port ${port}`);
+
+    }).catch((error) => {
+      console.error('Unable to connect to the database: ', error);
+    });
+
+  } catch (error) {
+    console.error('Error connection: ', error);
+  }
+
+});

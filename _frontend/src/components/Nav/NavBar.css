@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   height: 150px;
-  margin: 0px auto ;
+  margin: 0px auto;
   padding: 0px;
   width: 80%;
 }
@@ -26,9 +26,9 @@
   height: auto;
 }
 
-.link:hover {
+/* .link:hover {
   border-bottom: 1px solid salmon;
-}
+} */
 
 .navLinkTemplate-links {
   color: var(--myGreen);
@@ -70,5 +70,18 @@
   .logo {
     font-size: 55px;
     color: var(--myGreen);
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .navBar {
+    display: block;
+    text-align: center;
+    height: auto;
+    margin: 25px auto;
+  }
+
+  .profile {
+    margin: auto;
   }
 }

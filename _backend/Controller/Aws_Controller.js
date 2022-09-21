@@ -15,13 +15,6 @@ const UploadFile = async (req, res) => {
   const { originalname, mimetype, path, size } = req.file;
   const { userLoggedID, userLogged_EMAIL } = req.body;
 
-  /*   console.log(
-      "test",
-      `${userLogged_EMAIL.toString().split("@")[0].trim()}.${
-        originalname.toString().split(".")[1].trim().split(".")[1]
-      }`
-    ); */
-
   //  construct the URL path for the profile user image using the email address of the logged in user
   const urlPhoto = `https://projects-app-photo.s3.eu-central-1.amazonaws.com/${userLogged_EMAIL
     .toString()
