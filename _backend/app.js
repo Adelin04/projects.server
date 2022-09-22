@@ -1,19 +1,22 @@
 const express = require("express");
+
 const cors = require("cors");
 const morgan = require("morgan");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const MySqlStore = require("express-mysql-session")(session);
+const multer = require("multer");
+
+// const session = require("express-session");
+// const cookieParser = require("cookie-parser");
+// const MySqlStore = require("express-mysql-session")(session);
+const sequelize = require("./ConnectionDB/DataBase");
+
 const UserRoutes = require("./Routes/UserRoutes");
 const ProjectRoutes = require("./Routes/ProjectRoutes");
 const AwsRoutes = require("./Routes/AwsRoutes");
-const sequelize = require("./ConnectionDB/DataBase");
-const multer = require("multer");
 
 //  emv config
 require("dotenv").config();
 
-//  express app initialization
+//  Server Handling
 const app = express();
 
 const upload = multer({ dest: "uploads/" });
@@ -24,8 +27,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("dev"));
+
 // creating 24 hours from milliseconds
-const oneDay = 1000 * 60 * 60 * 24;
+// const oneDay = 1000 * 60 * 60 * 24;
 
 //  CORS
 app.use(cors())
@@ -44,7 +48,7 @@ sequelize.sync(
 );
 
 
-//  start server app
+//  start server
 const server = app.listen(process.env.PORT || 4000, async () => {
 
   try {
