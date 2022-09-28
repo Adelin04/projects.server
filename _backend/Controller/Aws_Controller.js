@@ -10,13 +10,13 @@ const s3 = new AWS.S3({
 });
 
 const UploadFile = async (req, res) => {
-
   //  destructuring req object
   const { originalname, mimetype, path, size } = req.file;
   const { userLoggedID, userLogged_EMAIL } = req.body;
 
   //  construct the URL path for the profile user image using the email address of the logged in user
-  const urlPhoto = `https://projects-app-photo.s3.eu-central-1.amazonaws.com/${userLogged_EMAIL
+  // const urlPhoto = `https://projects-app-photos.s3.us-east-1.amazonaws.com/${userLogged_EMAIL
+  const urlPhoto = `https://projects-app-photos.s3.amazonaws.com/${userLogged_EMAIL
     .toString()
     .split("@")[0]
     .trim()}.${originalname.toString().split(".")[1].trim()}`;
@@ -71,6 +71,6 @@ const UploadFile = async (req, res) => {
 };
 
 module.exports = {
-  UploadFile: UploadFile,
+  UploadFile: UploadFile
 };
 

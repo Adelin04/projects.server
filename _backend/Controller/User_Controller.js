@@ -154,5 +154,6 @@ module.exports = {
   Login: Login,
   AuthChecker: AuthChecker,
   GetAllUsers: GetAllUsers,
-  PostSetPhotoUser: PostSetPhotoUser
+  PostSetPhotoUser: PostSetPhotoUser,
+  UserProfile: UserProfile
 };

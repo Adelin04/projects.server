@@ -40,6 +40,7 @@ app.use("/auth/", UserRoutes);
 app.use("/project/", ProjectRoutes);
 app.use("/aws/", upload.single("file"), AwsRoutes);
 
+
 sequelize.sync(
   {
     // force: true,
