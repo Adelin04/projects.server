@@ -41,6 +41,7 @@ users = {
   "user3": { "name": "ramesh", "password": "password3", "profession": "clerk", "id": 3 },
   "user4": { "name": "mohit", "password": "password4", "profession": "teacher", "id": 4 },
   "user5": { "name": "carnat", "password": "password4", "profession": "teacher", "id": 5 },
+  "user6": { "name": "carnat2", "password": "password4", "profession": "teacher", "id": 6 },
 }
 
 //  Routes
