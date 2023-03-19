@@ -1,4 +1,4 @@
-# projects-app-node-react
+# Projects
 
 "Projects" as the name implies is a project management app.
 You can create new projects, assign team members, set deadlines, change statuses.
