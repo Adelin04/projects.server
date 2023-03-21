@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import NavBar from "../Nav/NavBar";
 import Button from "../_Utils/Button";
 
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { Redirect } from "react-router-dom";
 import { ProjectsContext } from "../Context/ProjectsContext";
 import { ADD_PROJECT, FETCH_PROJECTS } from "../Reducer/Action";
@@ -50,7 +50,7 @@ const NewProject = () => {
   };
 
   useEffect(() => {
-    fetch(`${URL_HEROKU}/auth/get/all-users`)
+    fetch(`${URL_PRODUCTION}/auth/get/all-users`)
       .then((res) => res.json())
       .then((data) => {
         setUserList(data);
@@ -99,7 +99,7 @@ const NewProject = () => {
     };
 
     console.log(dataNewProject);
-    fetch(`${URL_HEROKU}/project/post/newProject`, {
+    fetch(`${URL_PRODUCTION}/project/post/newProject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

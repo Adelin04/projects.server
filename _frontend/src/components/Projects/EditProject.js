@@ -4,7 +4,7 @@ import "./Projects.css";
 import NavBar from "../Nav/NavBar";
 import Button from "../_Utils/Button";
 
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { Redirect } from "react-router-dom";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,7 +51,7 @@ class EditProject extends React.Component {
   };
 
   loadUsers = () => {
-    fetch(`${URL_HEROKU}/auth/get/all-users`)
+    fetch(`${URL_PRODUCTION}/auth/get/all-users`)
       .then((res) => {
         return res.json();
       })
@@ -65,7 +65,7 @@ class EditProject extends React.Component {
       match: { params },
     } = this.props;
 
-    fetch(`${URL_HEROKU}/project/get/edit-project/${params.id}`)
+    fetch(`${URL_PRODUCTION}/project/get/edit-project/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
         const { succes, editProject } = data;
@@ -100,7 +100,7 @@ class EditProject extends React.Component {
       projectDetails: self.state.projectDetails,
     };
 
-    fetch(`${URL_HEROKU}/project/put/edited/project/${params.id}`, {
+    fetch(`${URL_PRODUCTION}/project/put/edited/project/${params.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -275,23 +275,3 @@ class EditProject extends React.Component {
 }
 
 export default EditProject;
-
-//console.log(event.target.id);
-//console.log(event.target.value);
-/* let TMP_list = [];
-    if (event.target.checked) {
-      TMP_list.push(...this.state.projectTeam, event.target.value);
-      this.setState({
-        [event.target.name]: TMP_list
-      });
-    } else if (!event.target.checked) {
-      if (this.state.projectTeam.length > 0) {
-        let remainingItems = this.state.projectTeam.filter(
-          element => element !== event.target.value
-        );
-        console.log('remainingItems',remainingItems);
-        this.setState({
-          [event.target.name]: remainingItems
-        });
-      }
-    } */

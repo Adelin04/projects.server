@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./Projects.css";
 
 import { Redirect, Link } from "react-router-dom";
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION  } from "../_Utils/Dependency";
 import { ProjectsContext } from "../Context/ProjectsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
@@ -99,7 +99,7 @@ const ProjectsList = () => {
     );
     const data = { projects: TMP_list };
 
-    fetch(`${URL_HEROKU}/project/move/finished-project/${id}`, {
+    fetch(`${URL_PRODUCTION}/project/move/finished-project/${id}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -136,7 +136,7 @@ const ProjectsList = () => {
     const id = Number(event.target.id);
     let TMP_list = [];
 
-    await fetch(`${URL_HEROKU}/project/delete/project/${id}`, {
+    await fetch(`${URL_PRODUCTION}/project/delete/project/${id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())

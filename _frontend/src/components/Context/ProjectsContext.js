@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from "react";
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { Projects_reducer } from "../Reducer/Projects_Reducer";
 import { FETCH_PROJECTS } from "../Reducer/Action";
 import { UserContext } from "./UserContext";
@@ -19,7 +19,7 @@ const ProjectsProvider = ({ children }) => {
   );
 
   const fetchProjects = async token => {
-    await fetch(`${URL_HEROKU}/project/get/projects`, {
+    await fetch(`${URL_PRODUCTION}/project/get/projects`, {
       headers: {
         authorization: token,
         Accept: "application/json",

@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import "./NavBar.css";
 import NavLinkTemplate from "./NavLinkTemplate";
 
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../Context/UserContext";
@@ -17,7 +17,7 @@ const NavBar = ({ links }) => {
   const [visibility, setVisibility] = useState("hidden");
 
   /*   const handleLogOut = async () => {
-      const response = await fetch(`${URL_HEROKU}logout-user`);
+      const response = await fetch(`${URL_PRODUCTION}logout-user`);
       const responseJson = await response.json();
     }; */
 

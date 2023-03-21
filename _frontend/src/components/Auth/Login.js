@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Auth.css";
 
-import { URL_HEROKU } from "../_Utils/Dependency";
+import {  URL_PRODUCTION } from "../_Utils/Dependency";
 import NavBar from "../Nav/NavBar";
 import Button from "../_Utils/Button";
 import Footer from "../Footer/Footer";
@@ -36,7 +36,7 @@ const Login = () => {
     setBtnMsg("Loading...");
     setMsg(null);
 
-    fetch(`${URL_HEROKU}/auth/login`, {
+    fetch(`${URL_PRODUCTION}/auth/login`, {
       method: "POST",
       mode: "cors",
       headers: {

@@ -4,7 +4,7 @@ import "./Auth.css";
 import NavBar from "../Nav/NavBar";
 import Button from "../_Utils/Button";
 import Footer from "../Footer/Footer";
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { Redirect } from "react-router";
 
 const links = [
@@ -56,7 +56,7 @@ class Register extends React.Component {
     self.setState({ btnMsg: "Loading...", msg: null });
 
     if (self.state.password === self.state.confirmPassword) {
-      fetch(`${URL_HEROKU}/auth/register`, {
+      fetch(`${URL_PRODUCTION}/auth/register`, {
         headers: { "Content-Type": " application/json" },
         method: "POST",
         body: JSON.stringify(dataUser),

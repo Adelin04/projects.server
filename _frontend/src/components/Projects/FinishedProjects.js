@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../Nav/NavBar";
 
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
 import ProjectTemplate from "./ProjectTemplate";
@@ -41,7 +41,7 @@ const FinishedProjects = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token !== null || token !== undefined) {
-      fetch(`${URL_HEROKU}/project/get/finished-project`, {
+      fetch(`${URL_PRODUCTION}/project/get/finished-project`, {
         method: "POST",
         headers: { authorization: token },
       })
@@ -61,7 +61,7 @@ const FinishedProjects = () => {
   const handleDelete = (event) => {
     const id = Number(event.target.id);
 
-    fetch(`${URL_HEROKU}/project/delete/project/${id}`, {
+    fetch(`${URL_PRODUCTION}/project/delete/project/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",

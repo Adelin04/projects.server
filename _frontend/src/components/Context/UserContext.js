@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, createContext } from "react";
-import { URL_HEROKU } from "../_Utils/Dependency";
+import { URL_PRODUCTION } from "../_Utils/Dependency";
 import { User_Reducer } from "../Reducer/User_Reducer";
 import {
   SET_AUTH,
@@ -19,7 +19,7 @@ const UserProvider = ({ children }) => {
   const [userLogged, dispatch_user] = useReducer(User_Reducer, initialState);
 
   const fetchUserInfo = async (token) => {
-    await fetch(`${URL_HEROKU}/auth/authChecker`, {
+    await fetch(`${URL_PRODUCTION}/auth/authChecker`, {
       headers: {
         authorization: token,
         Accept: "application/json",
