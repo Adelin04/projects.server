@@ -1,5 +1,5 @@
 const User = require("../Models/Users_Model");
-const Projects = require("../Models/Project_Model");
+const Projects = require("../Models/Project_Model").default;
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");

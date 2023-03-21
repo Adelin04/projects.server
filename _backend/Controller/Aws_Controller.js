@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const Project = require("../Models/Project_Model");
+const Project = require("../Models/Project_Model").default;
 const User = require("../Models/Users_Model");
 
 const s3 = new AWS.S3({

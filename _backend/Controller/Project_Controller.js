@@ -1,6 +1,6 @@
 const User = require("../Models/Users_Model");
 const { Op } = require("sequelize");
-const Projects = require("../Models/Project_Model");
+const Projects = require("../Models/Project_Model").default;
 const jwt = require("jsonwebtoken");
 
 //  GET: get all projects for user logged in

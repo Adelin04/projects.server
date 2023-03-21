@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../ConnectionDB/DataBase");
 
 //  define Project fields and create the project table
-const Project = sequelize.define("project", {
+const Project = sequelize.define("Project", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

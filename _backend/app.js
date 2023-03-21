@@ -5,9 +5,10 @@ const morgan = require("morgan");
 const multer = require("multer");
 
 // const session = require("express-session");
-// const cookieParser = require("cookie-parser");
-// const MySqlStore = require("express-mysql-session")(session);
-// const sequelize = require("./ConnectionDB/DataBase");
+const cookieParser = require("cookie-parser");
+
+const sequelize = require("./ConnectionDB/DataBase");
+const tunnel = require('tunnel-ssh');
 
 const UserRoutes = require("./Routes/UserRoutes");
 const ProjectRoutes = require("./Routes/ProjectRoutes");
@@ -35,51 +36,72 @@ app.use(morgan("dev"));
 //  CORS
 app.use(cors())
 
-users = {
+/* users = {
   "user1": { "name": "mahesh", "password": "password1", "profession": "teacher", "id": 1 },
   "user2": { "name": "suresh", "password": "password2", "profession": "librarian", "id": 2 },
   "user3": { "name": "ramesh", "password": "password3", "profession": "clerk", "id": 3 },
   "user4": { "name": "mohit", "password": "password4", "profession": "teacher", "id": 4 },
   "user5": { "name": "carnat", "password": "password4", "profession": "teacher", "id": 5 },
   "user6": { "name": "carnat2", "password": "password4", "profession": "teacher", "id": 6 },
-}
+} */
 
 //  Routes
 app.use("/auth/", UserRoutes);
 app.use("/project/", ProjectRoutes);
 app.use("/aws/", upload.single("file"), AwsRoutes);
 
-app.get("/", (req,res) => {
+/* app.get("/", (req,res) => {
   return res.json({users})
-});
+}); */
 
-/* sequelize.sync(
-  {
-    // force: true,
-    // alter: true,
-  }
-); */
+
 
 
 //  start server
-const server = app.listen(process.env.PORT || 4000, async () => {
-
-  // try {
-
-  //   await sequelize.authenticate().then(() => {
-  //     console.log('Connection has been established successfully.');
-
-  //     const port = server.address().port;
-  //     console.log(`Server is running on port ${port}`);
-
-  //   }).catch((error) => {
-  //     console.error('Unable to connect to the database: ', error);
-  //   });
-
-  // } catch (error) {
-  //   console.error('Error connection: ', error);
-  // }
+/* const server = app.listen(process.env.PORT || 4000, async () => {
   const port = server.address().port;
-  console.log(`Server is running on port ${port}`);
 
-});
+  sequelize.authenticate().then(() => {
+    console.log(`Server is running on port ${port}`);
+    console.log('Connection has been established successfully.');
+
+    sequelize.sync(
+      {
+        // force: true,
+        // alter: true,
+      }
+    );
+  }).catch((error) => {
+    console.error('Unable to connect to the database: ', error);
+  });
+
+}); */
+
+const sshConfig = {
+  user: 'maverick',
+  host: '139.162.169.107',
+  port: 22,
+  dstHost: 'localhost',
+  dstPort: 5432,
+  localHost: 'localhost',
+  localPort: 3307
+}
+
+
+// initiate tunnel
+tunnel(sshConfig, (error, server) => {
+  if(error) {
+    console.error(error);
+  } else {
+    console.log('server:', server);
+
+    sequelize
+        .authenticate()
+        .then((db) => {
+            console.log('CONNECTION ESTABLISHED! ', db);
+        })
+        .catch((err) => {
+            console.error('UNABLE TO ESTABLISH CONNECTION: ', err);
+        })
+  }
+})
